@@ -1,0 +1,149 @@
+# =============================================================================
+# PRODUCTION DOCKER COMPOSE CONFIGURATION
+# =============================================================================
+# This file is for production deployment with NGINX reverse proxy and unified authentication.
+#
+# SETUP (REQUIRED):
+# 1. Copy .env.production.example to .env.production
+# 2. Fill in ALL values in .env.production (no defaults provided)
+# 3. Run: docker compose -f docker-compose.prod.yml --env-file .env.production up --build
+#
+# ACCESS:
+# - Website: http://localhost (port 80)
+# - HTTPS: https://localhost (port 443, bring your own certificates)
+#
+# NOTE: All environment variables MUST be set in .env.production
+# Use --env-file .env.production flag to load variables for Docker Compose interpolation
+# =============================================================================
+
+services:
+  # Auth Init Container - Creates .htpasswd file from environment variables
+  auth-init:
+    image: httpd:alpine
+    container_name: portfolio-auth-init
+    environment:
+      - ADMIN_USER=${ADMIN_USER:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+    volumes:
+      - auth_data:/auth
+    command: >
+      sh -c "
+        echo 'Creating .htpasswd file from environment variables...' &&
+        htpasswd -cb /auth/.htpasswd \"$$ADMIN_USER\" \"$$ADMIN_PASSWORD\" &&
+        echo 'Auth file created successfully' &&
+        ls -la /auth/
+      "
+    restart: "no"
+
+  # NGINX Reverse Proxy with Session Management
+  nginx:
+    image: nginx:alpine
+    container_name: portfolio-nginx
+    ports:
+      - "80:80"
+      - "443:443"  # HTTPS support (bring your own certificates)
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - auth_data:/etc/nginx/auth:ro
+    depends_on:
+      auth-init:
+        condition: service_completed_successfully
+      frontend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    networks:
+      portfolio-network:
+        ipv4_address: 172.20.0.10
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    container_name: portfolio-frontend
+    networks:
+      portfolio-network:
+        ipv4_address: 172.20.0.20
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Backend API Server (No Authentication - Protected by NGINX)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    container_name: portfolio-backend
+    env_file:
+      - .env.production
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - HOST=${API_HOST}
+      - DATABASE_PATH=${DATABASE_PATH}
+      - LOG_FILE=${LOG_FILE_PATH}
+      # Email/SMTP
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_SECURE=${SMTP_SECURE}
+      - SMTP_USER=${GMAIL_USER}
+      - SMTP_PASS=${GMAIL_APP_PASSWORD}
+      - FROM_EMAIL=${FROM_EMAIL}
+      - TO_EMAIL=${TO_EMAIL}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - MESSAGE_ID_DOMAIN=${MESSAGE_ID_DOMAIN}
+      # Gmail API
+      - GMAIL_CLIENT_ID=${GMAIL_CLIENT_ID}
+      - GMAIL_CLIENT_SECRET=${GMAIL_CLIENT_SECRET}
+      - GMAIL_REDIRECT_URI=${GMAIL_REDIRECT_URI}
+      - GMAIL_REFRESH_TOKEN=${GMAIL_REFRESH_TOKEN}
+      - GMAIL_FROM_EMAIL=${GMAIL_FROM_EMAIL}
+      # Security
+      - JWT_SECRET=${JWT_SECRET}
+      - ADMIN_TOKEN=${ADMIN_TOKEN}
+      - ADMIN_USER=${ADMIN_USER}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - DISABLE_BACKEND_AUTH=true # Disable backend auth, protected by NGINX
+      # CORS
+      - CORS_ORIGINS=${CORS_ORIGINS}
+    volumes:
+      - backend_data:/app/data
+      - backend_logs:/app/logs
+    networks:
+      portfolio-network:
+        ipv4_address: 172.20.0.30
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001/api/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  backend_data:
+    driver: local
+  backend_logs:
+    driver: local
+  auth_data:
+    driver: local
+
+networks:
+  portfolio-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1

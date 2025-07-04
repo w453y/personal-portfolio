@@ -1,0 +1,40 @@
+# Development Dockerfile for Node.js backend with hot reloading
+FROM node:20-alpine
+
+# Install dumb-init for proper signal handling and nodemon for hot reloading
+RUN apk add --no-cache dumb-init curl
+
+# Create app directory
+WORKDIR /app
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S portfolio -u 1001
+
+# Copy package files
+COPY package*.json ./
+
+# Install ALL dependencies (including dev dependencies for development)
+RUN npm install && npm cache clean --force
+
+# Copy source code
+COPY . .
+
+# Create necessary directories
+RUN mkdir -p /app/data /app/logs
+
+# Change ownership to non-root user
+RUN chown -R portfolio:nodejs /app
+
+# Switch to non-root user
+USER portfolio
+
+# Expose port
+EXPOSE 3001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3001/api/health || exit 1
+
+# Start development server with hot reloading (using nodemon if available, otherwise node)
+CMD ["sh", "-c", "if npm list nodemon > /dev/null 2>&1; then npm run dev; else npm start; fi"]

@@ -1,0 +1,134 @@
+# =============================================================================
+# DEVELOPMENT DOCKER COMPOSE CONFIGURATION
+# =============================================================================
+# This file is for development use only. It provides:
+# - Direct port mapping (no NGINX reverse proxy)
+# - Hot reloading for both frontend and backend
+# - Volume mounts for source code changes
+#
+# SETUP (REQUIRED):
+# 1. Copy .env.development.example to .env.development
+# 2. Fill in ALL values in .env.development (no defaults provided)
+# 3. Run: docker-compose -f docker-compose.dev.yml --env-file .env.development up --build
+#
+# ACCESS:
+# - Frontend: http://localhost:3000
+# - Backend API: http://localhost:3001
+#
+# NOTE: All environment variables MUST be set in .env.development
+# Use --env-file .env.development flag to load variables for Docker Compose interpolation
+# =============================================================================
+
+services:
+  # React Frontend - Development Mode (Direct Access)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: portfolio-frontend-dev
+    env_file:
+      - .env.development
+    ports:
+      - "3000:3000"  # Map frontend dev server to host port 3000
+    volumes:
+      - ./frontend/src:/app/src:ro  # Mount source for hot reloading
+      - ./frontend/public:/app/public:ro  # Mount public assets
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - VITE_API_URL=${VITE_API_URL}
+      - VITE_BACKEND_URL=${VITE_BACKEND_URL}
+    networks:
+      portfolio-network:
+        ipv4_address: ${FRONTEND_IP}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Backend API Server - Development Mode (Direct Access, No Auth)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: portfolio-backend-dev
+    env_file:
+      - .env.development
+    ports:
+      - "3001:3001"  # Map backend to host port 3001
+    volumes:
+      - ./backend/src:/app/src:ro  # Mount source for hot reloading
+      - backend_data:/app/data
+      - backend_logs:/app/logs
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - HOST=${HOST}
+      - CORS_ORIGINS=${CORS_ORIGINS}
+      - DATABASE_PATH=${DATABASE_PATH}
+      
+      # Gmail SMTP Configuration
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_SECURE=${SMTP_SECURE}
+      - SMTP_USER=${GMAIL_USER}
+      - SMTP_PASS=${GMAIL_APP_PASSWORD}
+      - FROM_EMAIL=${FROM_EMAIL}
+      - TO_EMAIL=${TO_EMAIL}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - MESSAGE_ID_DOMAIN=${MESSAGE_ID_DOMAIN}
+      
+      # Gmail API Configuration (optional - for conversation threading)
+      - GMAIL_CLIENT_ID=${GMAIL_CLIENT_ID}
+      - GMAIL_CLIENT_SECRET=${GMAIL_CLIENT_SECRET}
+      - GMAIL_REDIRECT_URI=${GMAIL_REDIRECT_URI}
+      - GMAIL_REFRESH_TOKEN=${GMAIL_REFRESH_TOKEN}
+      - GMAIL_ACCESS_TOKEN=${GMAIL_ACCESS_TOKEN}
+      
+      # Security & Other Settings (Development - Auth Disabled)
+      - JWT_SECRET=${JWT_SECRET}
+      - ADMIN_TOKEN=${ADMIN_TOKEN}
+      - ADMIN_USER=${ADMIN_USER}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - BCRYPT_ROUNDS=${BCRYPT_ROUNDS}
+      - RATE_LIMIT_WINDOW=${RATE_LIMIT_WINDOW}
+      - RATE_LIMIT_MAX=${RATE_LIMIT_MAX}
+      - CONTACT_RATE_LIMIT_WINDOW=${CONTACT_RATE_LIMIT_WINDOW}
+      - CONTACT_RATE_LIMIT_MAX=${CONTACT_RATE_LIMIT_MAX}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_FILE=${LOG_FILE}
+      - MAX_MESSAGE_LENGTH=${MAX_MESSAGE_LENGTH}
+      - MIN_MESSAGE_LENGTH=${MIN_MESSAGE_LENGTH}
+      
+      # Development Mode - Disable Backend Authentication
+      - DISABLE_BACKEND_AUTH=true
+      
+      # Timeout Configuration
+      - REQUEST_TIMEOUT=60000  # 60 seconds
+      - API_TIMEOUT=60000      # 60 seconds
+    networks:
+      portfolio-network:
+        ipv4_address: ${BACKEND_IP}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001/api/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  backend_data:
+    driver: local
+  backend_logs:
+    driver: local
+
+networks:
+  portfolio-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${NETWORK_SUBNET}
+          gateway: ${NETWORK_GATEWAY}
