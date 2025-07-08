@@ -2,6 +2,8 @@ name: Build and Push Docker Images
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'frontend/**'
       - 'backend/**'
@@ -34,6 +36,7 @@ jobs:
           file: ./frontend/Dockerfile.prod
           push: true
           tags: ${{ env.FRONTEND_IMAGE }}:latest
+          provenance: false
 
       - name: Build and push backend image
         uses: docker/build-push-action@v5
@@ -42,3 +45,4 @@ jobs:
           file: ./backend/Dockerfile.prod
           push: true
           tags: ${{ env.BACKEND_IMAGE }}:latest
+          provenance: false
