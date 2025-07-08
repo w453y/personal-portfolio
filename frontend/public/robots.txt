@@ -1,26 +1,2 @@
 User-agent: *
 Allow: /
-
-# Allow indexing of main portfolio content
-Allow: /$
-Allow: /about
-Allow: /experience
-Allow: /projects
-Allow: /skills
-Allow: /education
-Allow: /contact
-
-# Block admin and authentication pages
-Disallow: /login
-Disallow: /mailbox
-Disallow: /auth/
-Disallow: /api/
-
-# Block common admin paths
-Disallow: /admin/
-Disallow: /dashboard/
-Disallow: /wp-admin/
-Disallow: /wp-login.php
-
-# Sitemap location
-Sitemap: https://w453y.me/sitemap.xml
