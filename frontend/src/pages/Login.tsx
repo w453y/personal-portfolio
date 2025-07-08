@@ -56,10 +56,8 @@ const Login = () => {
 
       if (response.ok) {
         toast.success('Login successful!');
-        // Small delay to ensure cookie is set, then redirect
-        setTimeout(() => {
-          navigate('/mailbox', { replace: true });
-        }, 100);
+        // Redirect to mailbox
+        navigate('/mailbox', { replace: true });
       } else {
         const errorData = await response.json().catch(() => ({}));
         toast.error(errorData.message || 'Invalid credentials');

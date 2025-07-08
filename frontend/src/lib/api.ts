@@ -220,27 +220,9 @@ class ApiService {
   }
 
   async logout(): Promise<AuthResponse> {
-    try {
-      const response = await this.makeRequest<AuthResponse>('/auth/logout', {
-        method: 'GET'
-      });
-      
-      // If logout response includes redirect, handle it
-      if (response.data?.redirect || (response as any).redirect) {
-        const redirectUrl = response.data?.redirect || (response as any).redirect;
-        setTimeout(() => {
-          window.location.href = redirectUrl;
-        }, 100);
-      }
-      
-      return response;
-    } catch (error) {
-      // Even if logout fails, redirect to login
-      setTimeout(() => {
-        window.location.href = '/login';
-      }, 100);
-      throw error;
-    }
+    return this.makeRequest<AuthResponse>('/auth/logout', {
+      method: 'GET'
+    });
   }
 
   // Admin API methods (protected by session cookies)
