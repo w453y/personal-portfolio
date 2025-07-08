@@ -4,7 +4,7 @@ import path from 'path';
 // Load environment variables
 dotenv.config();
 
-const DOMAIN = process.env.DOMAIN || 'yourdomain.com';
+const DOMAIN = process.env.DOMAIN || 'localhost';
 
 export const config = {
   // Server configuration
@@ -14,6 +14,9 @@ export const config = {
 
   // CORS configuration
   CORS_ORIGINS: process.env.CORS_ORIGINS?.split(',') || [
+    'http://localhost',
+    'http://localhost:3000',
+    'http://localhost:8080',
     `https://${DOMAIN}`,
     `https://www.${DOMAIN}`,
     `https://portfolio.${DOMAIN}`
