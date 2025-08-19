@@ -80,7 +80,7 @@ export const Projects = () => {
       technologies: [
         "React", "Vite", "TypeScript", "Tailwind CSS", "Node.js", "Express", "Docker", "NGINX", "Gmail API", "OAuth2", "CI/CD", "Security", "Open Source"
       ],
-      github: "https://github.com/w453y/network-devops-canvas-showcase",
+      github: "https://github.com/w453y/personal-portfolio",
       external: null
     }
   ];

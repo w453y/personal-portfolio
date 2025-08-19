@@ -25,7 +25,7 @@ export const About = () => {
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-2">Who I Am</h3>
                   <p className="text-slate-300 leading-relaxed">
-                    Hi, I'm Abdul Wasey — a passionate network engineer, systems architect, and open-source enthusiast. I specialize in building resilient, scalable, and secure network infrastructure, with a strong focus on automation, DevOps, and cloud-native solutions. My journey spans hands-on research, technical leadership, and real-world deployments across enterprise and academic environments.
+                    Just a B.Tech student with a knack for building secure, scalable infrastructure. I design resilient network architectures, automate workflows, and deploy high-availability systems across diverse environments. Passionate about privacy-first solutions and open-source technologies, I actively share knowledge through technical talks and community contributions.
                   </p>
                 </div>
               </div>
@@ -36,8 +36,8 @@ export const About = () => {
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-2">Core Competencies</h3>
                   <p className="text-slate-300 leading-relaxed">
-                    • Network Engineering (IPv4/IPv6, SD-WAN, VLANs, Firewalls, VPNs, Load Balancing)<br />
-                    • DevOps & Automation (Docker, Kubernetes, CI/CD, Monitoring, Scripting)<br />
+                    • Network Engineering (IPv4/IPv6, Routing, VLANs, Firewalls, VPNs)<br />
+                    • DevOps & Automation (Docker, Kubernetes, CI/CD, Monitoring)<br />
                     • Cloud & Virtualization (AWS, GCP, Proxmox, Nutanix, Linux, Systemd)<br />
                     • Security & Research (NAC, PacketFence, Penetration Testing, CTFs)
                   </p>
@@ -81,7 +81,7 @@ export const About = () => {
               </div>
               <ul className="space-y-3">
                 <li className="flex items-center space-x-3"><div className="w-2 h-2 bg-blue-400 rounded-full"></div><span className="text-slate-300">Enterprise Network Engineering & Automation</span></li>
-                <li className="flex items-center space-x-3"><div className="w-2 h-2 bg-blue-400 rounded-full"></div><span className="text-slate-300">IPv6 & SD-WAN Deployments</span></li>
+                <li className="flex items-center space-x-3"><div className="w-2 h-2 bg-blue-400 rounded-full"></div><span className="text-slate-300">IPv6 & Network Automation</span></li>
                 <li className="flex items-center space-x-3"><div className="w-2 h-2 bg-blue-400 rounded-full"></div><span className="text-slate-300">Cloud Integration & Virtualization</span></li>
                 <li className="flex items-center space-x-3"><div className="w-2 h-2 bg-blue-400 rounded-full"></div><span className="text-slate-300">Network Security & Monitoring</span></li>
               </ul>

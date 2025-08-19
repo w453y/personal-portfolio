@@ -37,4 +37,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:3001/api/health || exit 1
 
 # Start development server with hot reloading (using nodemon if available, otherwise node)
-CMD ["sh", "-c", "if npm list nodemon > /dev/null 2>&1; then npm run dev; else npm start; fi"]
+CMD ["npm", "run", "dev:docker"]

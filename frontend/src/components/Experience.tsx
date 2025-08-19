@@ -33,14 +33,14 @@ export const Experience = () => {
       company: "Tata Communications",
       period: "May 2025 - July 2025",
       location: "Pune, India",
-      description: "MPTCP, OpenWrt, SD-WAN, QoS, WAN Failover, Link Aggregation",
+      description: "Network Infrastructure, Virtualization, Storage Solutions, High Availability",
       achievements: [
-        "Researched commercial and open-source WAN failover tools including Cisco SD-WAN, Peplink, and pfSense.",
-        "Identified OpenMPTCProuter as the optimal MPTCP solution for link aggregation in Tata Communications scenarios.",
-        "Deployed OpenMPTCProuter on Raspberry Pi, RUTX12/50, and x86 platforms, enabling seamless failover across fiber and 4G/5G connections.",
-        "Configured VPS-based MPTCP + Shadowsocks endpoint for encrypted, low-latency traffic relay from OMR.",
-        "Evaluated MPTCP, Glorytun, Shadowsocks, and QoS for VPN bypass, link monitoring, and routing optimization.",
-        "Designed selective traffic policies and multi-link setups for resilient media, telemetry, and edge connectivity."
+        "Designed and deployed a 2-node Proxmox VE cluster on Dell EMC PowerEdge R650xs servers with ZFS-mirror storage for enhanced system reliability.",
+        "Integrated Dell EMC ME5024 SAN with 8×1.92 TB SAS SSDs in RAID-6, implementing dual-controller iSCSI multipathing for high availability.",
+        "Developed a switching and aggregation engine for WAN failover, enabling seamless connectivity across fiber and 4G/5G networks.",
+        "Implemented LVM over multipath iSCSI LUNs to provide shared block storage for virtualized workloads.",
+        "Segregated management, cluster, and storage networks with dedicated NICs and VLANs for optimal performance isolation.",
+        "Performed comprehensive failover testing to ensure continuous I/O operations under link and controller failure scenarios."
       ],
       color: "from-blue-500 to-cyan-500",
       icon: "/uploads/tata.svg",

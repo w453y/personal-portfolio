@@ -54,10 +54,10 @@ export const Hero = () => {
             </h1>
             <div className="h-1 w-32 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8 rounded-full"></div>
             <p className="text-2xl md:text-3xl text-slate-300 mb-6 font-medium">
-              Network Engineer • DevOps & Cloud Specialist
+              Network Engineer • Systems Architect • Open-Source Enthusiast
             </p>
             <p className="text-lg text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Architecting resilient, secure, and scalable network infrastructure. Passionate about automation, open-source, and empowering the tech community. Experienced in SD-WAN, IPv6, virtualization, and cloud-native deployments.
+              Architecting resilient, secure, and scalable network infrastructure. Passionate about automation, open-source, and empowering the tech community. Experienced in WAN optimization, IPv6, virtualization, and cloud-native deployments.
             </p>
             
             <div className="grid grid-cols-3 md:grid-cols-9 gap-4 mb-12 max-w-3xl mx-auto">
