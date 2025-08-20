@@ -138,7 +138,7 @@ router.get('/gmail/status', async (req: Request, res: Response) => {
       success: true,
       configured: isConfigured,
       connected: isConnected,
-      authUrl: isConfigured ? null : gmailService.getAuthUrl()
+      authUrl: isConfigured && !isConnected ? gmailService.getAuthUrl() : null
     });
   } catch (error) {
     logger.error('Error checking Gmail status:', error);

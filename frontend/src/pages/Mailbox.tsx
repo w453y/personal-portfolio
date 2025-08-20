@@ -116,7 +116,21 @@ export const Mailbox: React.FC = () => {
 
   // Helper function to make authenticated API requests
   const makeAuthRequest = async (endpoint: string, options: RequestInit = {}) => {
-    const baseUrl = import.meta.env.DEV ? 'http://localhost:3001' : '';
+    // Use environment variables if available, otherwise use environment-specific defaults
+    let baseUrl = '';
+    
+    if (import.meta.env.VITE_API_URL) {
+      baseUrl = import.meta.env.VITE_API_URL;
+    } else if (import.meta.env.VITE_BACKEND_URL) {
+      baseUrl = import.meta.env.VITE_BACKEND_URL;
+    } else if (import.meta.env.DEV) {
+      // In development, check if we have NGINX proxy setup (port 80) or direct backend (port 3001)
+      baseUrl = 'http://localhost';
+    } else {
+      // Production: use relative URLs (empty baseUrl) for NGINX proxy
+      baseUrl = '';
+    }
+    
     const url = `${baseUrl}${endpoint}`;
     
     // In development mode, skip authentication headers
