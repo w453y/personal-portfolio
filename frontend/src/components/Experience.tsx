@@ -1,31 +1,26 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Briefcase, Calendar, MapPin, ExternalLink } from 'lucide-react';
 
 export const Experience = () => {
-  // Custom icon component for fallback
-  const CustomIcon = ({ src, alt, fallback, className = "w-6 h-6" }: { 
-    src: string; 
-    alt: string; 
-    fallback: React.ReactNode; 
-    className?: string;
-  }) => (
-    <div className="relative">
-      <img 
-        src={src} 
-        alt={alt}
-        className={className}
-        onError={(e) => {
-          const target = e.target as HTMLImageElement;
-          target.style.display = 'none';
-          const nextSibling = target.nextElementSibling as HTMLElement;
-          if (nextSibling) {
-            nextSibling.style.display = 'block';
-          }
-        }}
-      />
-      <div className="hidden">{fallback}</div>
-    </div>
-  );
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const experiences = [
     {
@@ -39,10 +34,8 @@ export const Experience = () => {
         "Integrated Dell EMC ME5024 SAN with 8×1.92 TB SAS SSDs in RAID-6, implementing dual-controller iSCSI multipathing for high availability.",
         "Developed a switching and aggregation engine for WAN failover, enabling seamless connectivity across fiber and 4G/5G networks.",
         "Implemented LVM over multipath iSCSI LUNs to provide shared block storage for virtualized workloads.",
-        "Segregated management, cluster, and storage networks with dedicated NICs and VLANs for optimal performance isolation.",
-        "Performed comprehensive failover testing to ensure continuous I/O operations under link and controller failure scenarios."
       ],
-      color: "from-blue-500 to-cyan-500",
+      color: "violet",
       icon: "/uploads/tata.svg",
       externalLink: "https://www.tatacommunications.com/"
     },
@@ -56,11 +49,9 @@ export const Experience = () => {
         "Deployed Dockerized Moodle testbed with Docker Compose for isolated API testing and rapid iteration.",
         "Built JWT authentication system using a custom NGINX module and Rails service to secure internal dashboards and tools.",
         "Set up Zabbix and Grafana monitoring with Discord alerts for SSL expiry and service anomalies.",
-        "Migrated GitLab Enterprise from host-based to Docker with NAS backups and automated health notifications.",
-        "Developed a containerized backup solution using Ruby and supercronic for NAS and Ceph S3 targets.",
-        "Migrated 30+ containers and 15 VMs from standalone Proxmox and Nutanix to a high-availability Proxmox cluster."
+        "Migrated 30+ containers and 15 VMs from standalone Proxmox and Nutanix to a high-availability Proxmox cluster.",
       ],
-      color: "from-purple-500 to-pink-500",
+      color: "pink",
       icon: "/uploads/iris.png",
       externalLink: "https://about.iris.nitk.ac.in/"
     },
@@ -72,112 +63,140 @@ export const Experience = () => {
       supervisor: "Prof. Mohit P. Tahiliani",
       description: "802.1X, VLANs, NAC, PacketFence, Virtualization, Security",
       achievements: [
-        "Designed and deployed a complete network access control (NAC) testbed using PacketFence, OPNsense, and VLAN segmentation in a virtualized lab with dual Proxmox servers and a Cisco SG300 switch.",
-        "Configured VLAN-based enforcement in PacketFence with dynamic device onboarding, DHCP handling, and access control across registration, isolation, and production VLANs.",
+        "Designed and deployed a complete network access control (NAC) testbed using PacketFence, OPNsense, and VLAN segmentation.",
+        "Configured VLAN-based enforcement in PacketFence with dynamic device onboarding, DHCP handling, and access control.",
         "Configured VLAN tagging and PVIDs for traffic routing and validated end-to-end enforcement by simulating endpoint scenarios.",
-        "Confirmed OPNsense WAN–LAN mediation through isolated test environments and ensured robust network isolation."
       ],
-      color: "from-green-500 to-teal-500",
+      color: "cyan",
       icon: "/uploads/nitk.png",
       externalLink: "https://www.nitk.ac.in/"
     }
   ];
 
+  const getColorClasses = (color: string) => {
+    const colors: Record<string, { gradient: string; text: string; bg: string; border: string }> = {
+      violet: { gradient: "from-violet-500 to-purple-500", text: "text-violet-400", bg: "bg-violet-500", border: "border-violet-500/30" },
+      pink: { gradient: "from-pink-500 to-rose-500", text: "text-pink-400", bg: "bg-pink-500", border: "border-pink-500/30" },
+      cyan: { gradient: "from-cyan-500 to-teal-500", text: "text-cyan-400", bg: "bg-cyan-500", border: "border-cyan-500/30" },
+    };
+    return colors[color] || colors.violet;
+  };
+
   return (
-    <section id="experience" className="relative py-20 overflow-hidden">
-      {/* Smooth gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-slate-900 to-indigo-900">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-blue-900/20"></div>
+    <section 
+      ref={sectionRef}
+      id="experience" 
+      className="relative py-24 overflow-hidden bg-[#0a0a0a]"
+    >
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/3 -right-48 w-96 h-96 bg-violet-600/10 rounded-full blur-[150px] animate-pulse-glow" />
+        <div className="absolute bottom-1/3 -left-48 w-96 h-96 bg-pink-600/10 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:80px_80px]" />
       </div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Professional Experience
+        {/* Section Header */}
+        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <span className="text-white">Professional </span>
+            <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Experience</span>
           </h2>
-          <div className="h-1 w-32 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+          <div className="flex items-center justify-center gap-2">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-violet-500" />
+            <div className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" />
+            <div className="h-px w-24 bg-gradient-to-r from-violet-500 via-pink-500 to-cyan-500" />
+            <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-cyan-500" />
+          </div>
         </div>
         
         <div className="max-w-5xl mx-auto">
           <div className="relative">
             {/* Timeline line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-green-500 hidden sm:block"></div>
-            <div className="space-y-12">
-              {experiences.map((exp, index) => (
-                <div key={index} className="relative flex flex-col sm:flex-row sm:items-start sm:space-x-6">
-                  {/* Timeline dot */}
-                  <div className={`flex-shrink-0 w-16 h-16 bg-gradient-to-r ${exp.color} rounded-full flex items-center justify-center shadow-lg z-10 hidden sm:flex`}>
-                    <Briefcase className="text-white" size={24} />
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 bg-gradient-to-br from-slate-800/80 to-slate-700/80 backdrop-blur-sm rounded-2xl p-4 sm:p-8 border border-slate-600/50 hover:border-blue-500/50 transition-all duration-300 hover:scale-105 shadow-xl ml-0 sm:ml-0">
-                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
-                      <div className="flex items-start space-x-4 flex-1">
-                        {/* Custom company icon */}
-                        <div className={`flex-shrink-0 mt-1`}>
-                          <CustomIcon
-                            src={exp.icon}
-                            alt={exp.company}
-                            fallback={<Briefcase className="text-slate-400" size={80} />} // even larger fallback
-                            className="w-28 h-28 sm:w-32 sm:h-32" // icon height matches location row end
-                          />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-2xl font-bold text-white mb-2">{exp.title}</h3>
-                          <div className="flex items-center space-x-3 mb-2">
-                            <p className={`text-lg font-semibold bg-gradient-to-r ${exp.color} bg-clip-text text-transparent`}>
-                              {exp.company}
-                            </p>
-                            {exp.externalLink && (
-                              <a 
-                                href={exp.externalLink} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="p-1.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-110"
-                              >
-                                <ExternalLink className="w-4 h-4 text-white/70" />
-                              </a>
+            <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-violet-500 via-pink-500 to-cyan-500 hidden md:block" />
+            
+            <div className="space-y-8">
+              {experiences.map((exp, index) => {
+                const colors = getColorClasses(exp.color);
+                return (
+                  <div 
+                    key={index} 
+                    className={`relative flex flex-col md:flex-row md:items-start gap-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
+                    style={{ transitionDelay: `${index * 0.2}s` }}
+                  >
+                    {/* Timeline dot */}
+                    <div className={`hidden md:flex flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br ${colors.gradient} items-center justify-center shadow-lg z-10`}>
+                      <Briefcase className="text-white" size={24} />
+                    </div>
+                    
+                    {/* Content card */}
+                    <div className={`flex-1 group p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:${colors.border} transition-all duration-500 hover:-translate-y-1`}>
+                      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
+                        <div className="flex items-start gap-4">
+                          {/* Company icon */}
+                          <div className="flex-shrink-0">
+                            <img
+                              src={exp.icon}
+                              alt={exp.company}
+                              className="w-16 h-16 md:w-20 md:h-20 object-contain"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                              }}
+                            />
+                          </div>
+                          <div>
+                            <h3 className="text-xl md:text-2xl font-bold text-white mb-1">{exp.title}</h3>
+                            <div className="flex items-center gap-2 mb-2">
+                              <p className={`text-lg font-semibold ${colors.text}`}>{exp.company}</p>
+                              {exp.externalLink && (
+                                <a 
+                                  href={exp.externalLink} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="p-1 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 hover:scale-110"
+                                >
+                                  <ExternalLink className="w-4 h-4 text-gray-400" />
+                                </a>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-2 text-gray-500 text-sm">
+                              <MapPin size={14} />
+                              <span>{exp.location}</span>
+                            </div>
+                            {exp.supervisor && (
+                              <p className="text-gray-500 text-sm mt-1">Supervisor: {exp.supervisor}</p>
                             )}
                           </div>
-                          {exp.location && (
-                            <div className="flex items-center space-x-2 mt-1">
-                              <MapPin className="text-slate-400" size={16} />
-                              <span className="text-slate-400">{exp.location}</span>
-                            </div>
-                          )}
-                          {exp.supervisor && (
-                            <p className="text-slate-400 mt-1">Supervisor: {exp.supervisor}</p>
-                          )}
                         </div>
-                      </div>
-                      <div className="flex items-center space-x-2 mt-4 lg:mt-0">
-                        <Calendar className="text-slate-400" size={16} />
-                        <span className={`bg-gradient-to-r ${exp.color} text-white px-4 py-2 rounded-full text-sm font-medium`}>
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${colors.gradient} text-white text-sm font-medium`}>
+                          <Calendar size={14} />
                           {exp.period}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <p className="text-cyan-300 mb-6 font-medium text-lg">{exp.description}</p>
-                    
-                    <div className="space-y-4">
-                      {exp.achievements.map((achievement, i) => (
-                        <div key={i} className="flex items-start space-x-3 group">
-                          <div className={`w-2 h-2 bg-gradient-to-r ${exp.color} rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform`}></div>
-                          <span className="text-slate-300 leading-relaxed group-hover:text-white transition-colors">{achievement}</span>
                         </div>
-                      ))}
+                      </div>
+                      
+                      <p className={`${colors.text} mb-4 font-medium`}>{exp.description}</p>
+                      
+                      <ul className="space-y-3">
+                        {exp.achievements.map((achievement, i) => (
+                          <li key={i} className="flex items-start gap-3 group/item">
+                            <div className={`w-1.5 h-1.5 ${colors.bg} rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform`} />
+                            <span className="text-gray-400 text-sm leading-relaxed group-hover/item:text-gray-300 transition-colors">{achievement}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
       
-      {/* Smooth transition to next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-indigo-900 via-indigo-900/80 to-transparent"></div>
+      {/* Bottom gradient fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
     </section>
   );
 };

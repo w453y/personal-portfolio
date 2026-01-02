@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Loader2, Server } from 'lucide-react';
 import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaReddit } from 'react-icons/fa';
 import { toast } from 'sonner';
@@ -15,6 +15,8 @@ export const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [backendStatus, setBackendStatus] = useState<'checking' | 'online' | 'offline'>('checking');
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   const [emailValidation, setEmailValidation] = useState<{
     isValidating: boolean;
     isValid: boolean | null;
@@ -24,7 +26,23 @@ export const Contact = () => {
     isValid: null
   });
 
-  // Check backend health on component mount
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const checkHealth = async () => {
       try {
@@ -36,19 +54,16 @@ export const Contact = () => {
     };
 
     checkHealth();
-    // Check health every 30 seconds
     const interval = setInterval(checkHealth, 30000);
     return () => clearInterval(interval);
   }, []);
 
-  // STRICT Email validation - blocks form until email is verified
   useEffect(() => {
     if (!formData.email || formData.email.length < 3) {
       setEmailValidation({ isValidating: false, isValid: null });
       return;
     }
 
-    // Basic format check first (instant)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setEmailValidation({
@@ -71,14 +86,13 @@ export const Contact = () => {
         });
       } catch (error) {
         console.error('Email validation failed:', error);
-        // STRICT: If validation fails, block the form
         setEmailValidation({
           isValidating: false,
           isValid: false,
           reason: 'Email validation service unavailable'
         });
       }
-    }, 1000); // 1 second debounce
+    }, 1000);
 
     return () => clearTimeout(timeoutId);
   }, [formData.email]);
@@ -103,7 +117,6 @@ export const Contact = () => {
       toast.error('Please enter a valid email address');
       return false;
     }
-    // STRICT: Email must be validated and confirmed to exist
     if (emailValidation.isValid !== true) {
       toast.error(emailValidation.reason || 'Please enter a valid, existing email address');
       return false;
@@ -160,15 +173,15 @@ export const Contact = () => {
 
   const getEmailInputStyles = () => {
     if (emailValidation.isValidating) {
-      return 'border-yellow-400 focus:border-yellow-500';
+      return 'border-yellow-400/50 focus:border-yellow-500';
     }
     if (emailValidation.isValid === true) {
-      return 'border-green-400 focus:border-green-500';
+      return 'border-green-400/50 focus:border-green-500';
     }
     if (emailValidation.isValid === false) {
-      return 'border-red-400 focus:border-red-500';
+      return 'border-red-400/50 focus:border-red-500';
     }
-    return 'border-white/20 focus:border-blue-500';
+    return 'border-white/10 focus:border-violet-500';
   };
 
   const getEmailValidationIcon = () => {
@@ -219,44 +232,43 @@ export const Contact = () => {
 
   const getButtonStyles = () => {
     if (submitStatus === 'success') {
-      return 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700';
+      return 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500';
     }
     if (submitStatus === 'error') {
-      return 'bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700';
+      return 'bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500';
     }
     if (backendStatus === 'offline' || emailValidation.isValid !== true) {
-      return 'bg-gradient-to-r from-gray-600 to-gray-700 cursor-not-allowed';
+      return 'bg-gray-600/50 cursor-not-allowed';
     }
-    return 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700';
+    return 'bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-500 hover:to-pink-500';
   };
 
   const getBackendStatusIndicator = () => {
     switch (backendStatus) {
       case 'checking':
         return (
-          <div className="flex items-center space-x-2 text-yellow-400">
-            <Loader2 className="animate-spin" size={16} />
-            <span className="text-sm">Checking backend...</span>
+          <div className="flex items-center gap-2 text-yellow-400">
+            <Loader2 className="animate-spin" size={14} />
+            <span className="text-xs">Checking...</span>
           </div>
         );
       case 'online':
         return (
-          <div className="flex items-center space-x-2 text-green-400">
-            <Server size={16} />
-            <span className="text-sm">Backend online</span>
+          <div className="flex items-center gap-2 text-green-400">
+            <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-xs">Online</span>
           </div>
         );
       case 'offline':
         return (
-          <div className="flex items-center space-x-2 text-red-400">
-            <AlertCircle size={16} />
-            <span className="text-sm">Backend offline</span>
+          <div className="flex items-center gap-2 text-red-400">
+            <div className="w-2 h-2 rounded-full bg-red-400" />
+            <span className="text-xs">Offline</span>
           </div>
         );
     }
   };
 
-  // Check if form can be submitted
   const canSubmit = () => {
     return (
       !isSubmitting && 
@@ -268,98 +280,116 @@ export const Contact = () => {
     );
   };
 
+  const socialLinks = [
+    { icon: FaGithub, href: "https://github.com/w453y", color: "hover:text-white hover:border-white/30" },
+    { icon: FaLinkedin, href: "https://linkedin.com/in/w453y", color: "hover:text-blue-400 hover:border-blue-400/30" },
+    { icon: FaTwitter, href: "https://twitter.com/w453y", color: "hover:text-sky-400 hover:border-sky-400/30" },
+    { icon: FaInstagram, href: "https://instagram.com/w453y", color: "hover:text-pink-400 hover:border-pink-400/30" },
+    { icon: FaReddit, href: "https://reddit.com/user/w453y", color: "hover:text-orange-400 hover:border-orange-400/30" },
+  ];
+
   return (
-    <section id="contact" className="relative py-20 overflow-hidden">
-      {/* Smooth gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900">
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/20 via-transparent to-purple-900/20"></div>
+    <section 
+      ref={sectionRef}
+      id="contact" 
+      className="relative py-24 overflow-hidden bg-[#0a0a0a]"
+    >
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/3 -left-48 w-96 h-96 bg-violet-600/8 rounded-full blur-[150px] animate-pulse-glow" />
+        <div className="absolute bottom-1/3 -right-48 w-96 h-96 bg-pink-600/8 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
       </div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Contact Me
+        {/* Section Header */}
+        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <span className="text-white">Get In </span>
+            <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Touch</span>
           </h2>
-          <div className="h-1 w-24 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
-          <p className="text-slate-300 text-lg mt-6">
+          <div className="flex items-center justify-center gap-2">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-violet-500" />
+            <div className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" />
+            <div className="h-px w-24 bg-gradient-to-r from-violet-500 via-pink-500 to-cyan-500" />
+            <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-cyan-500" />
+          </div>
+          <p className="text-gray-400 mt-6 max-w-lg mx-auto">
             Feel free to reach out for collaborations or just a friendly chat!
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Information */}
-          <div className="space-y-8">
-            <div className="flex items-center space-x-4">
-              <div className="p-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500">
+          <div className={`space-y-8 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`} style={{ transitionDelay: '0.2s' }}>
+            <div className="flex items-center gap-4 group">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 group-hover:scale-110 transition-transform">
                 <Mail className="text-white" size={20} />
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-white">Email</h4>
-                <p className="text-slate-300">awasey8905@gmail.com</p>
+                <h4 className="text-lg font-semibold text-white">Email</h4>
+                <p className="text-gray-400">awasey8905@gmail.com</p>
               </div>
             </div>
             
-            <div className="flex items-center space-x-4">
-              <div className="p-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500">
+            <div className="flex items-center gap-4 group">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 group-hover:scale-110 transition-transform">
                 <Phone className="text-white" size={20} />
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-white">Phone</h4>
-                <p className="text-slate-300">+91-7090344713</p>
+                <h4 className="text-lg font-semibold text-white">Phone</h4>
+                <p className="text-gray-400">+91-7090344713</p>
               </div>
             </div>
             
-            <div className="flex items-center space-x-4">
-              <div className="p-3 rounded-full bg-gradient-to-r from-pink-500 to-red-500">
+            <div className="flex items-center gap-4 group">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-500 group-hover:scale-110 transition-transform">
                 <MapPin className="text-white" size={20} />
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-white">Location</h4>
-                <p className="text-slate-300">Mangalore, India</p>
+                <h4 className="text-lg font-semibold text-white">Location</h4>
+                <p className="text-gray-400">Mangalore, India</p>
               </div>
             </div>
 
             {/* Social Media Links */}
             <div className="pt-6">
-              <h4 className="text-xl font-semibold text-white mb-4">Connect with me</h4>
-              <div className="flex space-x-4">
-                <a href="https://github.com/w453y" target="_blank" rel="noopener noreferrer" className="group bg-white/10 backdrop-blur-md p-3 rounded-full border border-white/20 hover:border-pink-400/50 transition-all duration-300 hover:scale-110 hover:bg-white/20">
-                  <FaGithub className="text-pink-400 group-hover:scale-110 transition-transform" size={24} />
-                </a>
-                <a href="https://linkedin.com/in/w453y" target="_blank" rel="noopener noreferrer" className="group bg-white/10 backdrop-blur-md p-3 rounded-full border border-white/20 hover:border-blue-400/50 transition-all duration-300 hover:scale-110 hover:bg-white/20">
-                  <FaLinkedin className="text-blue-400 group-hover:scale-110 transition-transform" size={24} />
-                </a>
-                <a href="https://twitter.com/w453y" target="_blank" rel="noopener noreferrer" className="group bg-white/10 backdrop-blur-md p-3 rounded-full border border-white/20 hover:border-blue-400/50 transition-all duration-300 hover:scale-110 hover:bg-white/20">
-                  <FaTwitter className="text-blue-400 group-hover:scale-110 transition-transform" size={24} />
-                </a>
-                <a href="https://instagram.com/w453y" target="_blank" rel="noopener noreferrer" className="group bg-white/10 backdrop-blur-md p-3 rounded-full border border-white/20 hover:border-pink-400/50 transition-all duration-300 hover:scale-110 hover:bg-white/20">
-                  <FaInstagram className="text-pink-400 group-hover:scale-110 transition-transform" size={24} />
-                </a>
-                <a href="https://reddit.com/user/w453y" target="_blank" rel="noopener noreferrer" className="group bg-white/10 backdrop-blur-md p-3 rounded-full border border-white/20 hover:border-orange-400/50 transition-all duration-300 hover:scale-110 hover:bg-white/20">
-                  <FaReddit className="text-orange-400 group-hover:scale-110 transition-transform" size={24} />
-                </a>
+              <h4 className="text-lg font-semibold text-white mb-4">Connect with me</h4>
+              <div className="flex gap-3">
+                {socialLinks.map((social, index) => (
+                  <a 
+                    key={index}
+                    href={social.href} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className={`p-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 transition-all duration-300 hover:scale-110 hover:bg-white/10 ${social.color}`}
+                  >
+                    <social.icon size={20} />
+                  </a>
+                ))}
               </div>
             </div>
           </div>
           
           {/* Contact Form */}
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all duration-300">
+          <div className={`p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{ transitionDelay: '0.3s' }}>
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-white">Send Message</h3>
+              <h3 className="text-xl font-bold text-white">Send Message</h3>
               {getBackendStatusIndicator()}
             </div>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-slate-300 text-sm font-medium mb-2">
+                  <label htmlFor="name" className="block text-gray-400 text-sm font-medium mb-2">
                     Your Name *
                   </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    className="w-full rounded-xl border border-white/20 bg-white/10 backdrop-blur-md text-white py-3 px-4 focus:outline-none focus:border-blue-500 focus:bg-white/20 transition-all duration-300 placeholder:text-slate-400"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 text-white py-3 px-4 focus:outline-none focus:border-violet-500 focus:bg-white/10 transition-all duration-300 placeholder:text-gray-600"
                     placeholder="Enter your name"
                     value={formData.name}
                     onChange={handleChange}
@@ -369,7 +399,7 @@ export const Contact = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="email" className="block text-slate-300 text-sm font-medium mb-2">
+                  <label htmlFor="email" className="block text-gray-400 text-sm font-medium mb-2">
                     Your Email *
                   </label>
                   <div className="relative">
@@ -377,7 +407,7 @@ export const Contact = () => {
                       type="email"
                       id="email"
                       name="email"
-                      className={`w-full rounded-xl border ${getEmailInputStyles()} bg-white/10 backdrop-blur-md text-white py-3 px-4 pr-10 focus:outline-none focus:bg-white/20 transition-all duration-300 placeholder:text-slate-400`}
+                      className={`w-full rounded-xl border ${getEmailInputStyles()} bg-white/5 text-white py-3 px-4 pr-10 focus:outline-none focus:bg-white/10 transition-all duration-300 placeholder:text-gray-600`}
                       placeholder="Enter your email"
                       value={formData.email}
                       onChange={handleChange}
@@ -392,24 +422,21 @@ export const Contact = () => {
                     <p className="text-red-400 text-xs mt-1">{emailValidation.reason}</p>
                   )}
                   {emailValidation.isValid === true && (
-                    <p className="text-green-400 text-xs mt-1">✓ Email verified and exists</p>
-                  )}
-                  {emailValidation.isValidating && (
-                    <p className="text-yellow-400 text-xs mt-1">Verifying email existence...</p>
+                    <p className="text-green-400 text-xs mt-1">✓ Email verified</p>
                   )}
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="subject" className="block text-slate-300 text-sm font-medium mb-2">
+                  <label htmlFor="subject" className="block text-gray-400 text-sm font-medium mb-2">
                     Subject
                   </label>
                   <input
                     type="text"
                     id="subject"
                     name="subject"
-                    className="w-full rounded-xl border border-white/20 bg-white/10 backdrop-blur-md text-white py-3 px-4 focus:outline-none focus:border-blue-500 focus:bg-white/20 transition-all duration-300 placeholder:text-slate-400"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 text-white py-3 px-4 focus:outline-none focus:border-violet-500 focus:bg-white/10 transition-all duration-300 placeholder:text-gray-600"
                     placeholder="Message subject"
                     value={formData.subject}
                     onChange={handleChange}
@@ -418,14 +445,14 @@ export const Contact = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="phone" className="block text-slate-300 text-sm font-medium mb-2">
+                  <label htmlFor="phone" className="block text-gray-400 text-sm font-medium mb-2">
                     Phone (Optional)
                   </label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
-                    className="w-full rounded-xl border border-white/20 bg-white/10 backdrop-blur-md text-white py-3 px-4 focus:outline-none focus:border-blue-500 focus:bg-white/20 transition-all duration-300 placeholder:text-slate-400"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 text-white py-3 px-4 focus:outline-none focus:border-violet-500 focus:bg-white/10 transition-all duration-300 placeholder:text-gray-600"
                     placeholder="Your phone number"
                     value={formData.phone}
                     onChange={handleChange}
@@ -435,14 +462,14 @@ export const Contact = () => {
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-slate-300 text-sm font-medium mb-2">
+                <label htmlFor="message" className="block text-gray-400 text-sm font-medium mb-2">
                   Your Message *
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   rows={4}
-                  className="w-full rounded-xl border border-white/20 bg-white/10 backdrop-blur-md text-white py-3 px-4 focus:outline-none focus:border-blue-500 focus:bg-white/20 transition-all duration-300 resize-none placeholder:text-slate-400"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 text-white py-3 px-4 focus:outline-none focus:border-violet-500 focus:bg-white/10 transition-all duration-300 resize-none placeholder:text-gray-600"
                   placeholder="Enter your message (minimum 10 characters)"
                   value={formData.message}
                   onChange={handleChange}
@@ -450,43 +477,33 @@ export const Contact = () => {
                   disabled={isSubmitting || backendStatus === 'offline'}
                   minLength={10}
                 />
-                <div className="text-right text-xs text-slate-400 mt-1">
+                <div className="text-right text-xs text-gray-500 mt-1">
                   {formData.message.length}/10 minimum
                 </div>
               </div>
               
-              <div>
-                <button
-                  type="submit"
-                  disabled={!canSubmit()}
-                  className={`w-full inline-flex justify-center items-center space-x-2 ${getButtonStyles()} text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none`}
-                >
-                  {getButtonContent()}
-                </button>
-                {!canSubmit() && emailValidation.isValid !== true && formData.email && (
-                  <p className="text-yellow-400 text-xs mt-2 text-center">
-                    ⚠️ Please wait for email verification to complete before sending
-                  </p>
-                )}
-              </div>
+              <button
+                type="submit"
+                disabled={!canSubmit()}
+                className={`w-full inline-flex justify-center items-center gap-2 ${getButtonStyles()} text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-[1.02] disabled:transform-none`}
+              >
+                {getButtonContent()}
+              </button>
             </form>
             
-            {/* Additional Info */}
-            <div className="mt-6 p-4 bg-white/5 rounded-xl border border-white/10">
-              <p className="text-slate-300 text-sm">
-                <strong>Response Time:</strong> I typically respond within 24 hours. For urgent matters, feel free to reach out directly via email or phone.
-              </p>
-              {backendStatus === 'offline' && (
-                <p className="text-red-400 text-sm mt-2">
-                  <strong>Note:</strong> The contact form is currently unavailable. Please email me directly at awasey8905@gmail.com
+            {backendStatus === 'offline' && (
+              <div className="mt-4 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+                <p className="text-red-400 text-sm">
+                  The contact form is currently unavailable. Please email me directly at awasey8905@gmail.com
                 </p>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
         
-        <div className="text-center mt-16">
-          <p className="text-slate-500">
+        {/* Footer */}
+        <div className={`text-center mt-20 pt-8 border-t border-white/5 transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.5s' }}>
+          <p className="text-gray-600 text-sm">
             © {new Date().getFullYear()} Abdul Wasey. All rights reserved.
           </p>
         </div>

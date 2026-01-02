@@ -22,7 +22,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
       <Navigation />
       <div id="hero">
         <Hero />

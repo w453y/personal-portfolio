@@ -1,55 +1,79 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { GraduationCap, Calendar, MapPin, Award, BookOpen, ExternalLink } from 'lucide-react';
 
 export const Education = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="education" className="relative py-20 overflow-hidden">
-      {/* Smooth gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-900 via-indigo-900 to-slate-900">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-slate-900/20"></div>
+    <section 
+      ref={sectionRef}
+      id="education" 
+      className="relative py-24 overflow-hidden bg-[#0a0a0a]"
+    >
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 -left-48 w-96 h-96 bg-blue-600/8 rounded-full blur-[150px] animate-pulse-glow" />
+        <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-indigo-600/8 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
       </div>
-      {/* Floating elements */}
-      <div className="absolute top-40 left-20 w-24 h-24 bg-blue-400/10 rounded-full blur-xl animate-float"></div>
-      <div className="absolute bottom-32 right-40 w-32 h-32 bg-purple-400/10 rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }}></div>
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Education
+
+      <div className="container mx-auto px-6 relative z-10">
+        {/* Section Header */}
+        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <span className="text-white">My </span>
+            <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent">Education</span>
           </h2>
-          <div className="h-1 w-24 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+          <div className="flex items-center justify-center gap-2">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-blue-500" />
+            <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            <div className="h-px w-24 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500" />
+            <div className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-violet-500" />
+          </div>
         </div>
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 lg:p-10 hover:bg-white/10 transition-all duration-500 shadow-2xl">
+
+        <div className={`max-w-6xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
+          <div className="p-6 md:p-8 lg:p-10 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500">
             {/* Header */}
-            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-8">
-              <div className="flex flex-col sm:flex-row sm:items-start space-y-4 sm:space-y-0 sm:space-x-6 flex-1">
-                {/* Directly render the NITK PNG, no icon container */}
+            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-8 gap-6">
+              <div className="flex flex-col sm:flex-row sm:items-start gap-6 flex-1">
                 <img
                   src="/uploads/nitk.png"
                   alt="NITK Surathkal"
-                  className="w-40 h-40 sm:w-56 sm:h-56 object-contain"
-                  style={{ minWidth: '10rem' }}
+                  className="w-32 h-32 sm:w-40 sm:h-40 object-contain flex-shrink-0"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
-                    const nextSibling = target.nextElementSibling as HTMLElement;
-                    if (nextSibling) {
-                      nextSibling.style.display = 'block';
-                    }
                   }}
                 />
-                <div className="hidden">
-                  <GraduationCap className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
-                </div>
                 <div className="flex-1">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                     <div className="flex-1">
                       <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-3">National Institute of Technology Karnataka, Surathkal</h3>
                       <p className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">
                         Bachelor of Technology (B.Tech)
                       </p>
-                      <p className="text-base sm:text-lg text-cyan-300 font-medium mb-2">Metallurgical and Materials Engineering</p>
-                      <div className="flex items-center space-x-2 text-slate-400 mb-4 lg:mb-0">
+                      <p className="text-base sm:text-lg text-cyan-400 font-medium mb-2">Metallurgical and Materials Engineering</p>
+                      <div className="flex items-center gap-2 text-gray-500">
                         <MapPin className="w-4 h-4 flex-shrink-0" />
                         <span className="text-sm sm:text-base">Surathkal, Karnataka, India</span>
                       </div>
@@ -58,72 +82,103 @@ export const Education = () => {
                       href="https://www.nitk.ac.in/" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="self-start mt-4 lg:mt-0 lg:ml-4 p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-110"
+                      className="self-start p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
                     >
-                      <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 text-white/70" />
+                      <ExternalLink className="w-5 h-5 text-gray-400" />
                     </a>
                   </div>
                 </div>
               </div>
-              <div className="mt-6 lg:mt-0 lg:ml-8">
-                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-medium text-sm sm:text-base">
-                  <Calendar className="w-4 h-4 flex-shrink-0" />
-                  <span>November 2022 - May 2026</span>
-                </div>
+              <div className="lg:ml-8">
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-sm font-medium">
+                  <Calendar className="w-4 h-4" />
+                  November 2022 - May 2026
+                </span>
               </div>
             </div>
+
             {/* Content Grid */}
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mt-12">
+            <div className="grid lg:grid-cols-2 gap-8 mt-10">
               {/* Academic Focus */}
-              <div>
-                <div className="flex items-center space-x-3 mb-6">
-                  <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
-                  <h4 className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+              <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`} style={{ transitionDelay: '0.3s' }}>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500">
+                    <BookOpen className="w-5 h-5 text-white" />
+                  </div>
+                  <h4 className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
                     Academic Focus
                   </h4>
                 </div>
-                <ul className="space-y-3 sm:space-y-4">
-                  <li className="flex items-start space-x-4"><div className="w-2 h-2 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mt-2 flex-shrink-0"></div><span className="text-slate-300 leading-relaxed text-sm sm:text-base">Materials Science & Engineering</span></li>
-                  <li className="flex items-start space-x-4"><div className="w-2 h-2 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mt-2 flex-shrink-0"></div><span className="text-slate-300 leading-relaxed text-sm sm:text-base">Process Engineering & Optimization</span></li>
-                  <li className="flex items-start space-x-4"><div className="w-2 h-2 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mt-2 flex-shrink-0"></div><span className="text-slate-300 leading-relaxed text-sm sm:text-base">Applied Mathematics & Statistics</span></li>
-                  <li className="flex items-start space-x-4"><div className="w-2 h-2 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mt-2 flex-shrink-0"></div><span className="text-slate-300 leading-relaxed text-sm sm:text-base">Computer Science & Programming</span></li>
+                <ul className="space-y-3">
+                  {[
+                    "Materials Science & Engineering",
+                    "Process Engineering & Optimization",
+                    "Applied Mathematics & Statistics",
+                    "Computer Science & Programming"
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-start gap-3 group/item">
+                      <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform" />
+                      <span className="text-gray-400 leading-relaxed group-hover/item:text-gray-300 transition-colors">{item}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
+
               {/* Leadership & Activities */}
-              <div>
-                <div className="flex items-center space-x-3 mb-6">
-                  <Award className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
-                  <h4 className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{ transitionDelay: '0.4s' }}>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-violet-500 to-pink-500">
+                    <Award className="w-5 h-5 text-white" />
+                  </div>
+                  <h4 className="text-xl font-bold bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
                     Leadership & Activities
                   </h4>
                 </div>
-                <ul className="space-y-3 sm:space-y-4">
-                  <li className="flex items-start space-x-4"><div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mt-2 flex-shrink-0"></div><span className="text-slate-300 leading-relaxed text-sm sm:text-base">Secretary, Systems & Security SIG at WEC</span></li>
-                  <li className="flex items-start space-x-4"><div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mt-2 flex-shrink-0"></div><span className="text-slate-300 leading-relaxed text-sm sm:text-base">CTF Competition Organizer</span></li>
-                  <li className="flex items-start space-x-4"><div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mt-2 flex-shrink-0"></div><span className="text-slate-300 leading-relaxed text-sm sm:text-base">Technical Workshop Coordinator</span></li>
-                  <li className="flex items-start space-x-4"><div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mt-2 flex-shrink-0"></div><span className="text-slate-300 leading-relaxed text-sm sm:text-base">Research Project Contributor</span></li>
+                <ul className="space-y-3">
+                  {[
+                    "Secretary, Systems & Security SIG at WEC",
+                    "CTF Competition Organizer",
+                    "Technical Workshop Coordinator",
+                    "Research Project Contributor"
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-start gap-3 group/item">
+                      <div className="w-1.5 h-1.5 bg-violet-500 rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform" />
+                      <span className="text-gray-400 leading-relaxed group-hover/item:text-gray-300 transition-colors">{item}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
+
             {/* Achievements */}
-            <div className="mt-8 lg:mt-12 p-6 sm:p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl">
-              <div className="flex items-center space-x-3 mb-6">
-                <Award className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" />
-                <h4 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+            <div className={`mt-10 p-6 rounded-xl bg-white/[0.02] border border-white/5 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.5s' }}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500">
+                  <Award className="w-5 h-5 text-white" />
+                </div>
+                <h4 className="text-xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
                   Notable Achievements
                 </h4>
               </div>
-              <ul className="space-y-3 sm:space-y-4">
-                <li className="flex items-start space-x-4"><div className="w-1.5 h-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full mt-2 flex-shrink-0"></div><span className="text-slate-300 text-xs sm:text-sm leading-relaxed">Active contributor to networking research projects with industry collaboration</span></li>
-                <li className="flex items-start space-x-4"><div className="w-1.5 h-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full mt-2 flex-shrink-0"></div><span className="text-slate-300 text-xs sm:text-sm leading-relaxed">Led multiple technical workshops on cybersecurity and network infrastructure</span></li>
-                <li className="flex items-start space-x-4"><div className="w-1.5 h-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full mt-2 flex-shrink-0"></div><span className="text-slate-300 text-xs sm:text-sm leading-relaxed">Recipient of APNIC funding for IPv6 deployment research project</span></li>
+              <ul className="space-y-3">
+                {[
+                  "Active contributor to networking research projects with industry collaboration",
+                  "Led multiple technical workshops on cybersecurity and network infrastructure",
+                  "Recipient of APNIC funding for IPv6 deployment research project"
+                ].map((item, index) => (
+                  <li key={index} className="flex items-start gap-3 group/item">
+                    <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform" />
+                    <span className="text-gray-400 text-sm leading-relaxed group-hover/item:text-gray-300 transition-colors">{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
         </div>
       </div>
-      {/* Smooth transition to next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent"></div>
+      
+      {/* Bottom gradient fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
     </section>
   );
 };

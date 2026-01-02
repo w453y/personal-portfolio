@@ -1,8 +1,27 @@
-import React, { useState } from 'react';
-import { ExternalLink, Github, Calendar, Tag, Shield, Server, Code, ChevronUp, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ExternalLink, Github, Calendar, Server, ChevronUp, ChevronDown, Folder } from 'lucide-react';
 
 export const Projects = () => {
   const [expandedProjects, setExpandedProjects] = useState<number[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const toggleProject = (index: number) => {
     setExpandedProjects(prev => 
@@ -18,7 +37,7 @@ export const Projects = () => {
       organization: "NITK Surathkal",
       period: "Feb 2024 - Present",
       description: "APNIC-funded project for comprehensive IPv6 network implementation, including DHCPv6 snooping, firewalling, and dual-stack rollout.",
-      gradient: "from-emerald-400 to-cyan-400",
+      color: "emerald",
       details: [
         "Configured DHCPv6 snooping and IPv6 firewall rules to block unauthorized IPs and isolate internal networks.",
         "Deployed and tested VMs with bridged networking to validate IPv6 end-to-end via DHCPv6 and SLAAC.",
@@ -35,7 +54,7 @@ export const Projects = () => {
       organization: null,
       period: "Oct 2023 - Present",
       description: "Advanced Python CLI tool for ICMP echo over IPv4/IPv6, with custom checksum, latency metrics, and modular architecture.",
-      gradient: "from-blue-400 to-indigo-400",
+      color: "blue",
       details: [
         "Implemented a Python CLI tool for ICMP echo over IPv4/IPv6, including custom checksum and latency metrics.",
         "Added features like per-request RTT stats, TTL control, interface selection, and address family enforcement.",
@@ -51,7 +70,7 @@ export const Projects = () => {
       organization: "IRIS, NITK",
       period: "May 2023 - Present",
       description: "Django-based web interface to automate deployment of Dockerized applications in isolated staging environments.",
-      gradient: "from-orange-400 to-red-400",
+      color: "orange",
       details: [
         "Developed a Django-based web interface to automate the deployment of Dockerized applications in isolated staging environments, allowing developers to launch test instances from Git URLs with no manual setup.",
         "Implemented dynamic subdomain generation with automated NGINX configuration to expose each deployment at a unique, testable endpoint.",
@@ -66,7 +85,7 @@ export const Projects = () => {
       organization: null,
       period: "2024 – Present",
       description: "A full-stack, open-source portfolio and contact management platform built with React, TypeScript, Node.js, and Docker. Features a modern UI, admin dashboard, Gmail-powered contact form, and advanced DevOps deployment.",
-      gradient: "from-fuchsia-500 to-blue-500",
+      color: "violet",
       details: [
         "Designed and developed a modern, responsive portfolio using React (Vite, TypeScript, Tailwind CSS) for the frontend and Node.js (Express, TypeScript) for the backend.",
         "Implemented a secure, Gmail-integrated contact form with server-side validation, anti-spam, and email delivery via both App Password and OAuth2.",
@@ -85,94 +104,149 @@ export const Projects = () => {
     }
   ];
 
+  const getColorClasses = (color: string) => {
+    const colors: Record<string, { gradient: string; text: string; bg: string; border: string; glow: string }> = {
+      emerald: { gradient: "from-emerald-500 to-teal-500", text: "text-emerald-400", bg: "bg-emerald-500", border: "border-emerald-500/30", glow: "shadow-emerald-500/20" },
+      blue: { gradient: "from-blue-500 to-indigo-500", text: "text-blue-400", bg: "bg-blue-500", border: "border-blue-500/30", glow: "shadow-blue-500/20" },
+      orange: { gradient: "from-orange-500 to-red-500", text: "text-orange-400", bg: "bg-orange-500", border: "border-orange-500/30", glow: "shadow-orange-500/20" },
+      violet: { gradient: "from-violet-500 to-purple-500", text: "text-violet-400", bg: "bg-violet-500", border: "border-violet-500/30", glow: "shadow-violet-500/20" },
+    };
+    return colors[color] || colors.violet;
+  };
+
   return (
-    <section id="projects" className="relative py-20 overflow-hidden">
-      {/* Smooth gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-indigo-900 via-purple-900 to-pink-900">
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/20 via-transparent to-pink-900/20"></div>
+    <section 
+      ref={sectionRef}
+      id="projects" 
+      className="relative py-24 overflow-hidden bg-[#0a0a0a]"
+    >
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 -left-48 w-96 h-96 bg-emerald-600/8 rounded-full blur-[150px] animate-pulse-glow" />
+        <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-violet-600/8 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-[200px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
       </div>
+      
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Featured Projects
+        {/* Section Header */}
+        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <span className="text-white">Featured </span>
+            <span className="bg-gradient-to-r from-emerald-400 via-blue-400 to-violet-400 bg-clip-text text-transparent">Projects</span>
           </h2>
-          <div className="h-1 w-32 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
-          <p className="text-xl text-slate-300 mt-6 max-w-2xl mx-auto">
+          <div className="flex items-center justify-center gap-2">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-emerald-500" />
+            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="h-px w-24 bg-gradient-to-r from-emerald-500 via-blue-500 to-violet-500" />
+            <div className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-violet-500" />
+          </div>
+          <p className="text-gray-400 mt-6 max-w-2xl mx-auto text-lg">
             Innovative solutions spanning network engineering, DevOps, and research
           </p>
         </div>
-        <div className={`max-w-7xl mx-auto grid lg:grid-cols-2 gap-8`}>
-          {projects.map((project, index) => (
-            <div
-              key={index}
-              className={`group h-full${projects.length % 2 === 1 && index === projects.length - 1 ? ' lg:col-start-1 lg:col-end-3 lg:mx-auto lg:w-1/2' : ''}`}
-            >
-              <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all duration-500 hover:scale-105 hover:border-white/20 shadow-2xl flex flex-col h-full min-h-[420px]">
-                {/* Project header */}
-                <div className="flex items-start justify-between mb-6">
-                  <div className={`p-4 rounded-2xl bg-gradient-to-r ${project.gradient} bg-opacity-20 backdrop-blur-sm border border-white/10`}>
-                    <Server className="w-6 h-6 text-white" />
+        
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8">
+          {projects.map((project, index) => {
+            const colors = getColorClasses(project.color);
+            const isExpanded = expandedProjects.includes(index);
+            
+            return (
+              <div
+                key={index}
+                className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} ${projects.length % 2 === 1 && index === projects.length - 1 ? 'lg:col-start-1 lg:col-end-3 lg:mx-auto lg:w-1/2' : ''}`}
+                style={{ transitionDelay: `${index * 0.15}s` }}
+              >
+                <div className={`group h-full p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${colors.glow} flex flex-col min-h-[420px]`}>
+                  {/* Project header */}
+                  <div className="flex items-start justify-between mb-6">
+                    <div className={`p-3 rounded-xl bg-gradient-to-br ${colors.gradient} shadow-lg`}>
+                      <Folder className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex gap-2">
+                      {project.github && (
+                        <a 
+                          href={project.github} 
+                          className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110 group/link" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          <Github className="w-5 h-5 text-gray-400 group-hover/link:text-white transition-colors" />
+                        </a>
+                      )}
+                      {project.external && (
+                        <a 
+                          href={project.external} 
+                          className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110 group/link" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          <ExternalLink className="w-5 h-5 text-gray-400 group-hover/link:text-white transition-colors" />
+                        </a>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex space-x-3">
-                    {project.github && (
-                      <a href={project.github} className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-110" target="_blank" rel="noopener noreferrer">
-                        <Github className="w-5 h-5 text-white/80" />
-                      </a>
-                    )}
-                    {project.external && (
-                      <a href={project.external} className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-110" target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-5 h-5 text-white/80" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
-                {project.organization && (
-                  <p className={`text-lg font-semibold bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent mb-2`}>
-                    {project.organization}
-                  </p>
-                )}
-                <div className="mb-4">
-                  <span className={`inline-block bg-gradient-to-r ${project.gradient} text-white px-4 py-2 rounded-full text-sm font-medium`}>
-                    {project.period}
-                  </span>
-                </div>
-                <p className="text-slate-300 mb-6 text-lg leading-relaxed">{project.description}</p>
-                <ul className="space-y-3 mb-6 min-h-[72px]">
-                  {(expandedProjects.includes(index) ? project.details : project.details.slice(0, 2)).map((detail, i) => (
-                    <li key={i} className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-slate-300">{detail}</span>
-                    </li>
-                  ))}
-                </ul>
-                {project.details.length > 2 && (
-                  <button
-                    onClick={() => toggleProject(index)}
-                    className={`flex items-center space-x-2 bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent hover:scale-105 transition-all duration-300 text-sm font-medium mb-6`}
-                  >
-                    <span>{expandedProjects.includes(index) ? 'Show Less' : 'Show More'}</span>
-                    {expandedProjects.includes(index) ? (
-                      <ChevronUp size={16} />
-                    ) : (
-                      <ChevronDown size={16} />
-                    )}
-                  </button>
-                )}
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech, i) => (
-                    <span key={i} className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs font-medium text-white/80 hover:bg-white/20 transition-colors">
-                      {tech}
+                  
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-white transition-colors">{project.title}</h3>
+                  
+                  {project.organization && (
+                    <p className={`text-lg font-semibold ${colors.text} mb-2`}>
+                      {project.organization}
+                    </p>
+                  )}
+                  
+                  <div className="mb-4">
+                    <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r ${colors.gradient} text-white text-sm font-medium`}>
+                      <Calendar size={14} />
+                      {project.period}
                     </span>
-                  ))}
+                  </div>
+                  
+                  <p className="text-gray-400 mb-6 leading-relaxed">{project.description}</p>
+                  
+                  <ul className="space-y-3 mb-6 flex-1">
+                    {(isExpanded ? project.details : project.details.slice(0, 2)).map((detail, i) => (
+                      <li key={i} className="flex items-start gap-3 group/item">
+                        <div className={`w-1.5 h-1.5 ${colors.bg} rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform`} />
+                        <span className="text-gray-400 text-sm leading-relaxed group-hover/item:text-gray-300 transition-colors">{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  {project.details.length > 2 && (
+                    <button
+                      onClick={() => toggleProject(index)}
+                      className={`flex items-center gap-2 ${colors.text} hover:brightness-125 transition-all duration-300 text-sm font-medium mb-6`}
+                    >
+                      <span>{isExpanded ? 'Show Less' : 'Show More'}</span>
+                      {isExpanded ? (
+                        <ChevronUp size={16} className="transition-transform" />
+                      ) : (
+                        <ChevronDown size={16} className="transition-transform" />
+                      )}
+                    </button>
+                  )}
+                  
+                  <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-white/5">
+                    {project.technologies.map((tech, i) => (
+                      <span 
+                        key={i} 
+                        className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
-      {/* Smooth transition to next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-pink-900 via-pink-900/80 to-transparent"></div>
+      
+      {/* Bottom gradient fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
     </section>
   );
 };
