@@ -66,7 +66,7 @@ export const Experience = () => {
         "Configured VLAN tagging and PVIDs for traffic routing and validated end-to-end enforcement by simulating endpoint scenarios.",
       ],
       color: "cyan",
-      icon: "/uploads/nitk.png",
+      icon: "/uploads/nitk.svg",
       externalLink: "https://www.nitk.ac.in/"
     }
   ];
@@ -84,7 +84,7 @@ export const Experience = () => {
     <section 
       ref={sectionRef}
       id="experience" 
-      className="relative py-24 overflow-hidden bg-[#0a0a0a]"
+      className="relative py-16 md:py-24 overflow-hidden bg-[#0a0a0a]"
     >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -133,11 +133,11 @@ export const Experience = () => {
                       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
                         <div className="flex items-start gap-4">
                           {/* Company icon */}
-                          <div className="flex-shrink-0 img-on-dark">
+                          <div className="flex-shrink-0">
                             <img
                               src={exp.icon}
                               alt={exp.company}
-                              className={`w-16 h-16 md:w-20 md:h-20 object-contain ${exp.icon.includes('.png') ? 'img-dark-fix' : ''}`}
+                              className={`w-16 h-16 md:w-20 md:h-20 object-contain ${(exp.icon.includes('foss') || exp.icon.includes('nitk')) ? 'invert brightness-200' : ''}`}
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
                                 target.style.display = 'none';

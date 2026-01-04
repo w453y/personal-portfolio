@@ -112,7 +112,7 @@ export const Skills = () => {
       organizer: "IIESOC, Dept. of CSE and COSH-NITK Surathkal",
       description: "Delivered a technical session on IPv6 network security, covering firewall architecture, stateful filtering, and deployment best practices for dual-stack environments.",
       color: "blue",
-      icon: "/uploads/nitk.png",
+      icon: "/uploads/nitk.svg",
       fallback: <Presentation className="w-6 h-6 text-blue-400" />,
       externalLink: "https://www.nitk.ac.in/document/attachments/6599/2024_Workshop_on_IPv6_Deployment.pdf"
     },
@@ -153,7 +153,7 @@ export const Skills = () => {
     <section 
       ref={sectionRef}
       id="skills" 
-      className="relative py-24 overflow-hidden bg-[#0a0a0a]"
+      className="relative py-16 md:py-24 overflow-hidden bg-[#0a0a0a]"
     >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -259,11 +259,11 @@ export const Skills = () => {
                   className="group p-6 rounded-2xl liquid-glass hover:-translate-y-1"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className={talk.icon.includes('.png') ? 'img-on-dark' : ''}>
+                    <div>
                       <img 
                         src={talk.icon} 
                         alt={talk.title}
-                        className={`w-12 h-12 object-contain ${talk.icon.includes('foss') ? 'invert brightness-200' : ''} ${talk.icon.includes('.png') ? 'img-dark-fix' : ''}`}
+                        className={`w-12 h-12 object-contain ${(talk.icon.includes('foss') || talk.icon.includes('nitk')) ? 'invert brightness-200' : ''}`}
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.style.display = 'none';

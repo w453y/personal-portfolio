@@ -55,7 +55,7 @@ export const About = () => {
     <section 
       ref={sectionRef}
       id="about" 
-      className="relative py-24 overflow-hidden bg-[#0a0a0a]"
+      className="relative py-16 md:py-24 overflow-hidden bg-[#0a0a0a]"
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">

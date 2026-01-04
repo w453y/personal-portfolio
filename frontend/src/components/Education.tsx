@@ -24,7 +24,7 @@ export const Education = () => {
     <section 
       ref={sectionRef}
       id="education" 
-      className="relative py-24 overflow-hidden bg-[#0a0a0a]"
+      className="relative py-16 md:py-24 overflow-hidden bg-[#0a0a0a]"
     >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -54,11 +54,11 @@ export const Education = () => {
             {/* Header */}
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-8 gap-6">
               <div className="flex flex-col sm:flex-row sm:items-start gap-6 flex-1">
-                <div className="img-on-dark">
+                <div className="flex-shrink-0">
                   <img
-                    src="/uploads/nitk.png"
+                    src="/uploads/nitk.svg"
                     alt="NITK Surathkal"
-                    className="w-32 h-32 sm:w-40 sm:h-40 object-contain img-dark-fix"
+                    className="w-32 h-32 sm:w-40 sm:h-40 object-contain invert brightness-200"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
