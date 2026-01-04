@@ -373,7 +373,7 @@ export const Contact = () => {
           </div>
           
           {/* Contact Form */}
-          <div className={`p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{ transitionDelay: '0.3s' }}>
+          <div className={`p-6 md:p-8 rounded-2xl liquid-glass ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{ transitionDelay: '0.3s' }}>
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-white">Send Message</h3>
               {getBackendStatusIndicator()}

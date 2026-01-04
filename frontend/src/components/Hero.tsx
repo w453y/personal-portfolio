@@ -59,6 +59,12 @@ export const Hero = () => {
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-600/10 rounded-full blur-[150px] animate-morph"
         />
         
+        {/* Animated geometric shapes */}
+        <div className="absolute top-20 left-20 w-20 h-20 border border-violet-500/20 rotate-45 animate-rotate-slow" />
+        <div className="absolute top-40 right-32 w-16 h-16 border border-pink-500/20 animate-rotate-slow" style={{ animationDirection: 'reverse' }} />
+        <div className="absolute bottom-32 left-40 w-24 h-24 border-2 border-cyan-500/10 rounded-full animate-pulse-glow" />
+        <div className="absolute bottom-20 right-20 w-12 h-12 bg-gradient-to-br from-violet-500/10 to-transparent rotate-12 animate-float" />
+        
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]" />
         
@@ -129,7 +135,7 @@ export const Hero = () => {
                   href={social.href}
                   target={social.href.startsWith('http') ? "_blank" : undefined}
                   rel={social.href.startsWith('http') ? "noopener noreferrer" : undefined}
-                  className={`group flex flex-col items-center p-4 rounded-xl bg-white/[0.02] backdrop-blur-sm border border-white/5 ${social.hoverBg} ${social.hoverBorder} transition-all duration-300 hover:scale-110 hover:-translate-y-1`}
+                  className={`group flex flex-col items-center p-4 rounded-xl liquid-glass ${social.hoverBg} ${social.hoverBorder} transition-all duration-300 hover:scale-110 hover:-translate-y-1`}
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   <social.icon className={`${social.color} mb-2 text-xl group-hover:scale-110 transition-transform`} />

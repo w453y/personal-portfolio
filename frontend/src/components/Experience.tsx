@@ -131,7 +131,7 @@ export const Experience = () => {
                     </div>
                     
                     {/* Content card */}
-                    <div className={`flex-1 group p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:${colors.border} transition-all duration-500 hover:-translate-y-1`}>
+                    <div className={`flex-1 group p-6 md:p-8 rounded-2xl liquid-glass hover:${colors.border} transition-all duration-500 hover:-translate-y-1`}>
                       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
                         <div className="flex items-start gap-4">
                           {/* Company icon */}

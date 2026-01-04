@@ -121,7 +121,7 @@ export const About = () => {
                 {highlights.map((item, index) => (
                   <div 
                     key={item.label}
-                    className="group flex items-center gap-3 p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/10 hover:bg-white/[0.05] transition-all duration-300"
+                    className="group flex items-center gap-3 p-4 rounded-xl liquid-glass hover:bg-white/[0.08] transition-all duration-300"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <item.icon className={`${item.color} w-6 h-6 group-hover:scale-110 transition-transform`} />
@@ -141,7 +141,7 @@ export const About = () => {
             {aboutCards.map((card, index) => (
               <div 
                 key={card.title}
-                className={`group relative p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                className={`group relative p-6 rounded-2xl liquid-glass hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                 style={{ transitionDelay: card.delay }}
               >
                 {/* Hover glow effect */}
@@ -162,7 +162,7 @@ export const About = () => {
 
           {/* Focus Areas */}
           <div className={`grid md:grid-cols-2 gap-6 mt-12 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-violet-500/30 transition-all duration-300">
+            <div className="group p-6 rounded-2xl liquid-glass-purple hover:border-violet-500/30 transition-all duration-300">
               <div className="flex items-center gap-3 mb-4">
                 <Target className="text-violet-400 w-6 h-6" />
                 <h3 className="text-xl font-semibold text-violet-400">Current Focus</h3>
@@ -177,7 +177,7 @@ export const About = () => {
               </ul>
             </div>
 
-            <div className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-pink-500/30 transition-all duration-300">
+            <div className="group p-6 rounded-2xl liquid-glass-pink hover:border-pink-500/30 transition-all duration-300">
               <div className="flex items-center gap-3 mb-4">
                 <Rocket className="text-pink-400 w-6 h-6" />
                 <h3 className="text-xl font-semibold text-pink-400">Research Interests</h3>

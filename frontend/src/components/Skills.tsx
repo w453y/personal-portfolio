@@ -182,7 +182,7 @@ export const Skills = () => {
 
         {/* Technical Skills */}
         <div className={`max-w-7xl mx-auto mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.1s' }}>
-          <div className="p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500">
+          <div className="p-6 md:p-8 rounded-2xl liquid-glass">
             <div className="flex items-center gap-3 mb-8">
               <div className="p-2.5 rounded-xl bg-gradient-to-br from-pink-500 to-violet-500">
                 <Sparkles className="w-5 h-5 text-white" />
@@ -211,7 +211,7 @@ export const Skills = () => {
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Certifications</h3>
             <div className="h-px w-16 bg-gradient-to-r from-transparent via-violet-500 to-transparent mx-auto" />
           </div>
-          <div className="p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500">
+          <div className="p-6 md:p-8 rounded-2xl liquid-glass">
             {certifications.map((cert, index) => {
               const colors = getColorClasses(cert.color);
               return (
@@ -258,13 +258,13 @@ export const Skills = () => {
               return (
                 <div 
                   key={index} 
-                  className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500 hover:-translate-y-1"
+                  className="group p-6 rounded-2xl liquid-glass hover:-translate-y-1"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <img 
                       src={talk.icon} 
                       alt={talk.title}
-                      className="w-12 h-12 object-contain"
+                      className={`w-12 h-12 object-contain ${talk.icon.includes('foss') ? 'invert brightness-200' : ''}`}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -301,7 +301,7 @@ export const Skills = () => {
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Leadership & Community</h3>
             <div className="h-px w-24 bg-gradient-to-r from-transparent via-violet-500 to-transparent mx-auto" />
           </div>
-          <div className="p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500">
+          <div className="p-6 md:p-8 rounded-2xl liquid-glass">
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
               <div className="flex items-start gap-4">
                 <img 

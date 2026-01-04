@@ -158,7 +158,7 @@ export const Projects = () => {
                 className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} ${projects.length % 2 === 1 && index === projects.length - 1 ? 'lg:col-start-1 lg:col-end-3 lg:mx-auto lg:w-1/2' : ''}`}
                 style={{ transitionDelay: `${index * 0.15}s` }}
               >
-                <div className={`group h-full p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${colors.glow} flex flex-col min-h-[420px]`}>
+                <div className={`group h-full p-6 md:p-8 rounded-2xl liquid-glass hover:-translate-y-2 hover:shadow-2xl ${colors.glow} flex flex-col min-h-[420px]`}>
                   {/* Project header */}
                   <div className="flex items-start justify-between mb-6">
                     <div className={`p-3 rounded-xl bg-gradient-to-br ${colors.gradient} shadow-lg`}>
