@@ -43,7 +43,7 @@ export const Hero = () => {
   ];
 
   return (
-    <section className="relative min-h-[85svh] md:min-h-[75vh] flex items-start justify-center overflow-hidden bg-[#0a0a0a] pt-0 md:pt-16 pb-4 md:pb-8">
+    <section className="relative min-h-[85svh] md:min-h-[auto] flex items-start justify-center overflow-hidden bg-[#0a0a0a] pt-0 md:pt-16 pb-4 md:pb-8">
       {/* Animated background gradient orbs */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Large gradient orbs */}
