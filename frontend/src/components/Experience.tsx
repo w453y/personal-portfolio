@@ -8,11 +8,9 @@ export const Experience = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: '-50px' }
     );
 
     if (sectionRef.current) {
@@ -135,11 +133,11 @@ export const Experience = () => {
                       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
                         <div className="flex items-start gap-4">
                           {/* Company icon */}
-                          <div className="flex-shrink-0">
+                          <div className="flex-shrink-0 img-on-dark">
                             <img
                               src={exp.icon}
                               alt={exp.company}
-                              className="w-16 h-16 md:w-20 md:h-20 object-contain"
+                              className={`w-16 h-16 md:w-20 md:h-20 object-contain ${exp.icon.includes('.png') ? 'img-dark-fix' : ''}`}
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
                                 target.style.display = 'none';

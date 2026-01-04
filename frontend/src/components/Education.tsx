@@ -8,11 +8,9 @@ export const Education = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: '-50px' }
     );
 
     if (sectionRef.current) {
@@ -56,15 +54,17 @@ export const Education = () => {
             {/* Header */}
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-8 gap-6">
               <div className="flex flex-col sm:flex-row sm:items-start gap-6 flex-1">
-                <img
-                  src="/uploads/nitk.png"
-                  alt="NITK Surathkal"
-                  className="w-32 h-32 sm:w-40 sm:h-40 object-contain flex-shrink-0"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
+                <div className="img-on-dark">
+                  <img
+                    src="/uploads/nitk.png"
+                    alt="NITK Surathkal"
+                    className="w-32 h-32 sm:w-40 sm:h-40 object-contain img-dark-fix"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                    }}
+                  />
+                </div>
                 <div className="flex-1">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                     <div className="flex-1">

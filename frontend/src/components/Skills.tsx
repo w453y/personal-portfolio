@@ -20,11 +20,9 @@ export const Skills = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: '-50px' }
     );
 
     if (sectionRef.current) {
@@ -261,15 +259,17 @@ export const Skills = () => {
                   className="group p-6 rounded-2xl liquid-glass hover:-translate-y-1"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <img 
-                      src={talk.icon} 
-                      alt={talk.title}
-                      className={`w-12 h-12 object-contain ${talk.icon.includes('foss') ? 'invert brightness-200' : ''}`}
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                      }}
-                    />
+                    <div className={talk.icon.includes('.png') ? 'img-on-dark' : ''}>
+                      <img 
+                        src={talk.icon} 
+                        alt={talk.title}
+                        className={`w-12 h-12 object-contain ${talk.icon.includes('foss') ? 'invert brightness-200' : ''} ${talk.icon.includes('.png') ? 'img-dark-fix' : ''}`}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                        }}
+                      />
+                    </div>
                     {talk.externalLink && (
                       <a 
                         href={talk.externalLink} 
