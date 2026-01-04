@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Loader2, Server } from 'lucide-react';
 import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaReddit } from 'react-icons/fa';
 import { toast } from 'sonner';
 import { submitContactForm, checkBackendHealth, validateEmail, type ContactFormData } from '@/lib/api';
+import { ScrollReveal } from './ui/ScrollReveal';
 
 export const Contact = () => {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -15,8 +16,6 @@ export const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [backendStatus, setBackendStatus] = useState<'checking' | 'online' | 'offline'>('checking');
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
   const [emailValidation, setEmailValidation] = useState<{
     isValidating: boolean;
     isValid: boolean | null;
@@ -25,21 +24,6 @@ export const Contact = () => {
     isValidating: false,
     isValid: null
   });
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.05, rootMargin: '50px 0px 50px 0px' }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const checkHealth = async () => {
@@ -288,7 +272,6 @@ export const Contact = () => {
 
   return (
     <section 
-      ref={sectionRef}
       id="contact" 
       className="relative py-8 md:py-12 overflow-hidden bg-[#0a0a0a]"
     >
@@ -301,7 +284,7 @@ export const Contact = () => {
       
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <ScrollReveal className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="text-white">Get In </span>
             <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Touch</span>
@@ -316,11 +299,11 @@ export const Contact = () => {
           <p className="text-gray-400 mt-6 max-w-lg mx-auto">
             Feel free to reach out for collaborations or just a friendly chat!
           </p>
-        </div>
+        </ScrollReveal>
         
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Information */}
-          <div className={`space-y-8 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`} style={{ transitionDelay: '0.2s' }}>
+          <ScrollReveal className="space-y-8" delay={100} direction="left">
             <div className="flex items-center gap-4 group">
               <div className="p-3 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 group-hover:scale-110 transition-transform">
                 <Mail className="text-white" size={20} />
@@ -368,14 +351,15 @@ export const Contact = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </ScrollReveal>
           
           {/* Contact Form */}
-          <div className={`p-6 md:p-8 rounded-2xl liquid-glass ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{ transitionDelay: '0.3s' }}>
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-white">Send Message</h3>
-              {getBackendStatusIndicator()}
-            </div>
+          <ScrollReveal delay={150} direction="right">
+            <div className="p-6 md:p-8 rounded-2xl liquid-glass">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-white">Send Message</h3>
+                {getBackendStatusIndicator()}
+              </div>
             
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid sm:grid-cols-2 gap-4">
@@ -496,15 +480,16 @@ export const Contact = () => {
                 </p>
               </div>
             )}
-          </div>
+            </div>
+          </ScrollReveal>
         </div>
         
         {/* Footer */}
-        <div className={`text-center mt-20 pt-8 border-t border-white/5 transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.5s' }}>
+        <ScrollReveal className="text-center mt-20 pt-8 border-t border-white/5" delay={200}>
           <p className="text-gray-600 text-sm">
             © {new Date().getFullYear()} Abdul Wasey. All rights reserved.
           </p>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

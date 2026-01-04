@@ -1,25 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Briefcase, Calendar, MapPin, ExternalLink } from 'lucide-react';
+import { ScrollReveal } from './ui/ScrollReveal';
 
 export const Experience = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.05, rootMargin: '50px 0px 50px 0px' }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   const experiences = [
     {
       title: "Project Trainee Intern",
@@ -82,7 +65,6 @@ export const Experience = () => {
 
   return (
     <section 
-      ref={sectionRef}
       id="experience" 
       className="relative py-8 md:py-12 overflow-hidden bg-[#0a0a0a]"
     >
@@ -95,7 +77,7 @@ export const Experience = () => {
       
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <ScrollReveal className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="text-white">Professional </span>
             <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Experience</span>
@@ -107,7 +89,7 @@ export const Experience = () => {
             <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
             <div className="h-px w-12 bg-gradient-to-l from-transparent to-cyan-500" />
           </div>
-        </div>
+        </ScrollReveal>
         
         <div className="max-w-5xl mx-auto">
           <div className="relative">
@@ -118,15 +100,16 @@ export const Experience = () => {
               {experiences.map((exp, index) => {
                 const colors = getColorClasses(exp.color);
                 return (
-                  <div 
+                  <ScrollReveal 
                     key={index} 
-                    className={`relative flex flex-col md:flex-row md:items-start gap-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
-                    style={{ transitionDelay: `${index * 0.2}s` }}
+                    delay={index * 150}
+                    direction="left"
                   >
-                    {/* Timeline dot */}
-                    <div className={`hidden md:flex flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br ${colors.gradient} items-center justify-center shadow-lg z-10`}>
-                      <Briefcase className="text-white" size={24} />
-                    </div>
+                    <div className="relative flex flex-col md:flex-row md:items-start gap-6">
+                      {/* Timeline dot */}
+                      <div className={`hidden md:flex flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br ${colors.gradient} items-center justify-center shadow-lg z-10`}>
+                        <Briefcase className="text-white" size={24} />
+                      </div>
                     
                     {/* Content card */}
                     <div className={`flex-1 group p-6 md:p-8 rounded-2xl liquid-glass hover:${colors.border} transition-all duration-500 hover:-translate-y-1`}>
@@ -186,6 +169,7 @@ export const Experience = () => {
                       </ul>
                     </div>
                   </div>
+                  </ScrollReveal>
                 );
               })}
             </div>

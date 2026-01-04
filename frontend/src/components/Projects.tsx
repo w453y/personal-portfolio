@@ -1,25 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { ExternalLink, Github, Calendar, Server, ChevronUp, ChevronDown, Folder } from 'lucide-react';
+import { ScrollReveal } from './ui/ScrollReveal';
 
 export const Projects = () => {
   const [expandedProjects, setExpandedProjects] = useState<number[]>([]);
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.05, rootMargin: '50px 0px 50px 0px' }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   const toggleProject = (index: number) => {
     setExpandedProjects(prev => 
@@ -114,7 +98,6 @@ export const Projects = () => {
 
   return (
     <section 
-      ref={sectionRef}
       id="projects" 
       className="relative py-8 md:py-12 overflow-hidden bg-[#0a0a0a]"
     >
@@ -128,7 +111,7 @@ export const Projects = () => {
       
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <ScrollReveal className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="text-white">Featured </span>
             <span className="bg-gradient-to-r from-emerald-400 via-blue-400 to-violet-400 bg-clip-text text-transparent">Projects</span>
@@ -143,7 +126,7 @@ export const Projects = () => {
           <p className="text-gray-400 mt-6 max-w-2xl mx-auto text-lg">
             Innovative solutions spanning network engineering, DevOps, and research
           </p>
-        </div>
+        </ScrollReveal>
         
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8">
           {projects.map((project, index) => {
@@ -151,12 +134,12 @@ export const Projects = () => {
             const isExpanded = expandedProjects.includes(index);
             
             return (
-              <div
+              <ScrollReveal
                 key={index}
-                className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} ${projects.length % 2 === 1 && index === projects.length - 1 ? 'lg:col-start-1 lg:col-end-3 lg:mx-auto lg:w-1/2' : ''}`}
-                style={{ transitionDelay: `${index * 0.15}s` }}
+                delay={index * 100}
+                className={projects.length % 2 === 1 && index === projects.length - 1 ? 'lg:col-start-1 lg:col-end-3 lg:mx-auto lg:w-1/2' : ''}
               >
-                <div className={`group h-full p-6 md:p-8 rounded-2xl liquid-glass hover:-translate-y-2 hover:shadow-2xl ${colors.glow} flex flex-col min-h-[420px]`}>
+                <div className={`group h-full p-6 md:p-8 rounded-2xl liquid-glass hover:-translate-y-2 hover:shadow-2xl ${colors.glow} flex flex-col min-h-[420px] transition-transform duration-300`}>
                   {/* Project header */}
                   <div className="flex items-start justify-between mb-6">
                     <div className={`p-3 rounded-xl bg-gradient-to-br ${colors.gradient} shadow-lg`}>
@@ -237,7 +220,7 @@ export const Projects = () => {
                     ))}
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
             );
           })}
         </div>

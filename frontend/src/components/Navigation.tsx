@@ -139,10 +139,10 @@ export const Navigation = () => {
   // Determine nav visibility class
   const getNavClasses = () => {
     if (!isVisible) {
-      // Hidden state - use CSS only, no mounting/unmounting
-      return 'fixed top-0 left-0 right-0 z-50 -translate-y-full opacity-0 pointer-events-none';
+      // Hidden state - smooth slide up animation (no opacity change)
+      return 'fixed top-0 left-0 right-0 z-50 -translate-y-full pointer-events-none transition-transform duration-300 ease-out';
     }
-    return 'fixed top-0 left-0 right-0 z-50 translate-y-0 opacity-100 transition-all duration-300';
+    return 'fixed top-0 left-0 right-0 z-50 translate-y-0 transition-transform duration-300 ease-out';
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { Award, Users, Presentation, ExternalLink, Sparkles } from 'lucide-react';
 import { FaNetworkWired, FaCloud, FaDocker, FaLinux, FaGitAlt, FaServer, FaShieldAlt, 
          FaPython, FaJs, FaReact, FaDatabase, FaAws, FaGoogle, FaMicrosoft, 
@@ -12,26 +12,9 @@ import { SiKubernetes, SiTerraform, SiAnsible, SiPrometheus, SiGrafana, SiJenkin
          SiNutanix,
          SiShell} from 'react-icons/si';
 import { TbPresentation } from 'react-icons/tb';
+import { ScrollReveal } from './ui/ScrollReveal';
 
 export const Skills = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.05, rootMargin: '50px 0px 50px 0px' }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   const CustomIcon = ({ src, alt, fallback, className = "w-5 h-5", iconSize = "w-5 h-5" }: { 
     src: string; 
     alt: string; 
@@ -151,7 +134,6 @@ export const Skills = () => {
 
   return (
     <section 
-      ref={sectionRef}
       id="skills" 
       className="relative py-8 md:py-12 overflow-hidden bg-[#0a0a0a]"
     >
@@ -164,7 +146,7 @@ export const Skills = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <ScrollReveal className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="text-white">Skills & </span>
             <span className="bg-gradient-to-r from-pink-400 via-violet-400 to-blue-400 bg-clip-text text-transparent">Expertise</span>
@@ -176,10 +158,10 @@ export const Skills = () => {
             <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
             <div className="h-px w-12 bg-gradient-to-l from-transparent to-blue-500" />
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Technical Skills */}
-        <div className={`max-w-7xl mx-auto mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.1s' }}>
+        <ScrollReveal className="max-w-7xl mx-auto mb-16" delay={100}>
           <div className="p-6 md:p-8 rounded-2xl liquid-glass">
             <div className="flex items-center gap-3 mb-8">
               <div className="p-2.5 rounded-xl bg-gradient-to-br from-pink-500 to-violet-500">
@@ -201,10 +183,10 @@ export const Skills = () => {
               ))}
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Certifications */}
-        <div className={`max-w-4xl mx-auto mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
+        <ScrollReveal className="max-w-4xl mx-auto mb-16" delay={150}>
           <div className="text-center mb-8">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Certifications</h3>
             <div className="h-px w-16 bg-gradient-to-r from-transparent via-violet-500 to-transparent mx-auto" />
@@ -242,10 +224,10 @@ export const Skills = () => {
               );
             })}
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Talks & Presentations */}
-        <div className={`max-w-7xl mx-auto mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
+        <ScrollReveal className="max-w-7xl mx-auto mb-16" delay={200}>
           <div className="text-center mb-8">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Talks & Presentations</h3>
             <div className="h-px w-20 bg-gradient-to-r from-transparent via-violet-500 to-transparent mx-auto" />
@@ -254,49 +236,48 @@ export const Skills = () => {
             {talks.map((talk, index) => {
               const colors = getColorClasses(talk.color);
               return (
-                <div 
-                  key={index} 
-                  className="group p-6 rounded-2xl liquid-glass hover:-translate-y-1"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <img 
-                        src={talk.icon} 
-                        alt={talk.title}
-                        className={`w-12 h-12 object-contain ${(talk.icon.includes('foss') || talk.icon.includes('nitk')) ? 'invert brightness-200' : ''}`}
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                        }}
-                      />
+                <ScrollReveal key={index} delay={index * 100}>
+                  <div className="group p-6 rounded-2xl liquid-glass hover:-translate-y-1 transition-transform duration-300 h-full">
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <img 
+                          src={talk.icon} 
+                          alt={talk.title}
+                          className={`w-12 h-12 object-contain ${(talk.icon.includes('foss') || talk.icon.includes('nitk')) ? 'invert brightness-200' : ''}`}
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                          }}
+                        />
+                      </div>
+                      {talk.externalLink && (
+                        <a 
+                          href={talk.externalLink} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
+                        >
+                          <ExternalLink className="w-4 h-4 text-gray-400" />
+                        </a>
+                      )}
                     </div>
-                    {talk.externalLink && (
-                      <a 
-                        href={talk.externalLink} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
-                      >
-                        <ExternalLink className="w-4 h-4 text-gray-400" />
-                      </a>
+                    <h4 className="text-lg font-bold text-white mb-2 group-hover:text-white transition-colors">{talk.title}</h4>
+                    <p className={`text-base font-semibold ${colors.text} mb-1`}>
+                      {talk.event}
+                    </p>
+                    {talk.organizer && (
+                      <p className="text-gray-500 text-sm mb-3">{talk.organizer}</p>
                     )}
+                    <p className="text-gray-400 text-sm leading-relaxed">{talk.description}</p>
                   </div>
-                  <h4 className="text-lg font-bold text-white mb-2 group-hover:text-white transition-colors">{talk.title}</h4>
-                  <p className={`text-base font-semibold ${colors.text} mb-1`}>
-                    {talk.event}
-                  </p>
-                  {talk.organizer && (
-                    <p className="text-gray-500 text-sm mb-3">{talk.organizer}</p>
-                  )}
-                  <p className="text-gray-400 text-sm leading-relaxed">{talk.description}</p>
-                </div>
+                </ScrollReveal>
               );
             })}
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Leadership & Community */}
-        <div className={`max-w-5xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
+        <ScrollReveal className="max-w-5xl mx-auto" delay={250}>
           <div className="text-center mb-8">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Leadership & Community</h3>
             <div className="h-px w-24 bg-gradient-to-r from-transparent via-violet-500 to-transparent mx-auto" />
@@ -338,7 +319,7 @@ export const Skills = () => {
               ))}
             </ul>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
       
       {/* Bottom gradient fade */}
