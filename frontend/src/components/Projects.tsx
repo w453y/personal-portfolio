@@ -11,7 +11,7 @@ export const Projects = () => {
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.1, rootMargin: '-50px' }
+      { threshold: 0.05, rootMargin: '50px 0px 50px 0px' }
     );
 
     if (sectionRef.current) {
