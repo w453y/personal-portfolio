@@ -10,7 +10,7 @@ export const About = () => {
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.05, rootMargin: '50px 0px 50px 0px' }
+      { threshold: 0.15, rootMargin: '0px 0px 0px 0px' }
     );
 
     if (sectionRef.current) {
@@ -55,7 +55,7 @@ export const About = () => {
     <section 
       ref={sectionRef}
       id="about" 
-      className="relative py-16 md:py-24 overflow-hidden bg-[#0a0a0a]"
+      className="relative py-8 md:py-12 overflow-hidden bg-[#0a0a0a]"
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">

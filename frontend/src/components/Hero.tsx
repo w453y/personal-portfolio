@@ -43,7 +43,7 @@ export const Hero = () => {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
+    <section className="relative min-h-[85svh] md:min-h-[75vh] flex items-start justify-center overflow-hidden bg-[#0a0a0a] pt-0 md:pt-16 pb-4 md:pb-8">
       {/* Animated background gradient orbs */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Large gradient orbs */}
@@ -86,14 +86,14 @@ export const Hero = () => {
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {/* Sparkle badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 animate-fade-in backdrop-blur-sm">
+            {/* Sparkle badge - hidden on mobile */}
+            <div className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-4 md:mb-8 animate-fade-in backdrop-blur-sm">
               <Sparkles className="w-4 h-4 text-violet-400" />
               <span className="text-sm text-gray-300">Network Engineer & Systems Architect</span>
             </div>
             
             {/* Main heading with gradient */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-6 leading-tight">
               <span className="block text-white mb-2">Hi, I'm</span>
               <span className="relative inline-block">
                 <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent animate-gradient-x bg-[length:200%_auto]">
@@ -104,7 +104,7 @@ export const Hero = () => {
             </h1>
             
             {/* Animated divider */}
-            <div className="flex items-center justify-center gap-2 mb-8">
+            <div className="flex items-center justify-center gap-2 mb-4 md:mb-8">
               <div className="h-px w-12 bg-gradient-to-r from-transparent to-violet-500" />
               <div className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" />
               <div className="h-px w-24 bg-gradient-to-r from-violet-500 via-pink-500 to-cyan-500" />
@@ -113,7 +113,7 @@ export const Hero = () => {
             </div>
             
             {/* Subtitle with typing effect look */}
-            <p className="text-xl md:text-2xl text-gray-400 mb-6 font-light">
+            <p className="text-lg md:text-2xl text-gray-400 mb-4 md:mb-6 font-light">
               <span className="text-violet-400">Network Engineer</span>
               <span className="mx-3 text-gray-600">•</span>
               <span className="text-pink-400">Systems Architect</span>
@@ -122,13 +122,13 @@ export const Hero = () => {
             </p>
             
             {/* Description */}
-            <p className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <p className="text-base md:text-lg text-gray-500 mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '0.3s' }}>
               Architecting resilient, secure, and scalable network infrastructure. 
               Passionate about automation, open-source, and empowering the tech community.
             </p>
             
             {/* Social links grid */}
-            <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-3 mb-12 max-w-3xl mx-auto">
+            <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-2 md:gap-3 mb-8 md:mb-12 max-w-3xl mx-auto">
               {socialLinks.map((social, index) => (
                 <a
                   key={social.label}
@@ -164,10 +164,10 @@ export const Hero = () => {
       </div>
       
       {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-16 md:h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
       
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce-subtle">
+      <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce-subtle">
         <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-2">
           <div className="w-1 h-2 bg-white/40 rounded-full animate-bounce" />
         </div>

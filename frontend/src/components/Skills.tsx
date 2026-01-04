@@ -153,7 +153,7 @@ export const Skills = () => {
     <section 
       ref={sectionRef}
       id="skills" 
-      className="relative py-16 md:py-24 overflow-hidden bg-[#0a0a0a]"
+      className="relative py-8 md:py-12 overflow-hidden bg-[#0a0a0a]"
     >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">

@@ -48,7 +48,7 @@ export const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
             <img 
               src="/uploads/w453y.svg" 
               alt="w453y Logo" 
-              className="h-48 w-48 md:h-64 md:w-64 mx-auto relative z-10"
+              className="h-64 w-64 md:h-80 md:w-80 lg:h-96 lg:w-96 mx-auto relative z-10"
             />
           </div>
 
