@@ -321,7 +321,7 @@ export const Skills = () => {
                       {contribution.details.slice(0, 2).map((detail, i) => (
                         <li key={i} className="flex items-start gap-3 group/item">
                           <span className="text-gray-400 text-sm leading-relaxed group-hover/item:text-gray-300 transition-colors">
-                            <span className="font-bold">•</span> {detail}
+                            <span className={`font-bold ${colors.text}`}>•</span> {detail}
                           </span>
                         </li>
                       ))}
