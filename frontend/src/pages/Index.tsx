@@ -24,25 +24,25 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
       <Navigation />
-      <div id="hero">
+      <div id="hero" className="bg-section-blue">
         <Hero />
       </div>
-      <div id="about">
+      <div id="about" className="bg-section-purple">
         <About />
       </div>
-      <div id="experience">
+      <div id="experience" className="bg-section-cyan">
         <Experience />
       </div>
-      <div id="projects">
+      <div id="projects" className="bg-section-pink">
         <Projects />
       </div>
-      <div id="skills">
+      <div id="skills" className="bg-section-teal">
         <Skills />
       </div>
-      <div id="education">
+      <div id="education" className="bg-section-blue">
         <Education />
       </div>
-      <div id="contact">
+      <div id="contact" className="bg-section-purple">
         <Contact />
       </div>
     </div>
