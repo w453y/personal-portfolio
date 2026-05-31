@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Users, Presentation, ExternalLink, Sparkles } from 'lucide-react';
+import { Award, Users, Presentation, ExternalLink, Sparkles, Github } from 'lucide-react';
 import { FaNetworkWired, FaCloud, FaDocker, FaLinux, FaGitAlt, FaServer, FaShieldAlt, 
          FaPython, FaJs, FaReact, FaDatabase, FaAws, FaGoogle, FaMicrosoft, 
          FaCertificate, FaUserGraduate, FaHandshake } from 'react-icons/fa';
@@ -257,38 +257,38 @@ export const Skills = () => {
 
         {/* Open Source Contributions */}
         <ScrollReveal className="max-w-7xl mx-auto mb-16" delay={125}>
-          <div className="text-center mb-8">
+          <div className="text-center mb-12">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Open Source Contributions</h3>
             <div className="h-px w-24 bg-gradient-to-r from-transparent via-emerald-500 to-transparent mx-auto" />
           </div>
-          <div className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-8">
             {openSourceContributions.map((contribution, index) => {
               const colors = getColorClasses(contribution.color);
               return (
-                <div key={index} className="p-6 md:p-8 rounded-2xl liquid-glass">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2 flex-wrap">
-                        <h4 className="text-2xl font-bold text-white">{contribution.title}</h4>
-                        <a
-                          href={contribution.external}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 hover:scale-110"
-                        >
-                          <ExternalLink className="w-5 h-5 text-gray-400 hover:text-white" />
-                        </a>
+                <ScrollReveal key={index} delay={index * 100}>
+                  <div className={`group h-full p-6 md:p-8 rounded-2xl liquid-glass hover:-translate-y-2 hover:shadow-2xl ${colors.glow} flex flex-col min-h-[420px] transition-transform duration-300`}>
+                    {/* Header with icon */}
+                    <div className="flex items-start justify-between mb-6">
+                      <div className={`p-3 rounded-xl bg-gradient-to-br ${colors.gradient} shadow-lg`}>
+                        <Github className="w-6 h-6 text-white" />
                       </div>
-                      <div className="flex items-center gap-3 flex-wrap mb-3">
-                        <p className={`text-lg font-semibold ${colors.text}`}>{contribution.organization}</p>
-                        <div className="flex items-center gap-2 text-gray-500 text-sm">
-                          <Sparkles size={14} />
-                          <code className="bg-white/5 px-2 py-1 rounded text-xs">{contribution.repository}</code>
-                        </div>
-                      </div>
-                      <p className="text-gray-400 text-sm">{contribution.description}</p>
+                      <a
+                        href={contribution.external}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 hover:scale-110"
+                      >
+                        <ExternalLink className="w-5 h-5 text-gray-400 hover:text-white" />
+                      </a>
                     </div>
-                    <div className="flex gap-2 flex-wrap lg:flex-col">
+
+                    {/* Title and org */}
+                    <h4 className="text-2xl font-bold text-white mb-2">{contribution.title}</h4>
+                    <p className={`text-lg font-semibold ${colors.text} mb-4`}>{contribution.organization}</p>
+                    <p className="text-gray-400 text-sm mb-6 flex-grow">{contribution.description}</p>
+
+                    {/* Badges */}
+                    <div className="flex gap-2 flex-wrap mb-6 pb-6 border-b border-white/10">
                       {(contribution as any).pullRequest && (
                         <a
                           href={contribution.github}
@@ -315,25 +315,29 @@ export const Skills = () => {
                         {contribution.status}
                       </span>
                     </div>
-                  </div>
-                  <div className="mb-6 pb-6 border-b border-white/10">
-                    <ul className="space-y-3">
-                      {contribution.details.map((detail, i) => (
-                        <li key={i} className="flex items-start gap-3 group/item">
-                          <div className={`w-1.5 h-1.5 ${colors.bg} rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform`} />
-                          <span className="text-gray-400 text-sm leading-relaxed group-hover/item:text-gray-300 transition-colors">{detail}</span>
-                        </li>
+
+                    {/* Details */}
+                    <div className="mb-6 pb-6 border-b border-white/10">
+                      <ul className="space-y-2">
+                        {contribution.details.slice(0, 2).map((detail, i) => (
+                          <li key={i} className="flex items-start gap-3 group/item">
+                            <div className={`w-1.5 h-1.5 ${colors.bg} rounded-full mt-2 flex-shrink-0`} />
+                            <span className="text-gray-400 text-xs leading-relaxed">{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Technologies */}
+                    <div className="flex flex-wrap gap-2 mt-auto">
+                      {contribution.technologies.slice(0, 4).map((tech, i) => (
+                        <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                          {tech}
+                        </span>
                       ))}
-                    </ul>
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {contribution.technologies.map((tech, i) => (
-                      <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                </ScrollReveal>
               );
             })}
           </div>
