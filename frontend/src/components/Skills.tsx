@@ -393,41 +393,41 @@ export const Skills = () => {
         </ScrollReveal>
 
         {/* Certifications */}
-        <ScrollReveal className="max-w-5xl mx-auto mb-16" delay={150}>
+        <ScrollReveal className="max-w-4xl mx-auto mb-16" delay={150}>
           <div className="text-center mb-8">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Certifications</h3>
             <div className="h-px w-16 bg-gradient-to-r from-transparent via-violet-500 to-transparent mx-auto" />
           </div>
-          <div className="space-y-4">
+          <div className="p-6 md:p-8 rounded-2xl liquid-glass space-y-4">
             {certifications.map((cert, index) => {
               const colors = getColorClasses(cert.color);
               return (
-                <ScrollReveal key={index} delay={index * 50}>
-                  <a 
-                    href={cert.externalLink} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={`group block p-6 md:p-8 rounded-2xl liquid-glass hover:-translate-y-1 transition-transform duration-300 ${colors.glow}`}
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-6 flex-1">
-                        <div className={`p-3 rounded-xl bg-gradient-to-br ${colors.gradient} shadow-lg flex-shrink-0`}>
-                          <CustomIcon 
-                            src={cert.icon} 
-                            alt={cert.name}
-                            fallback={<Award className="w-6 h-6 text-white" />}
-                            iconSize="w-6 h-6"
-                          />
-                        </div>
-                        <div className="flex-1">
-                          <h4 className="text-lg md:text-xl font-bold text-white mb-1 group-hover:text-white transition-colors">{cert.name}</h4>
-                          <p className={`text-sm font-semibold ${colors.text}`}>{cert.issuer} • {cert.year}</p>
-                        </div>
-                      </div>
-                      <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors flex-shrink-0" />
+                <div key={index} className={`flex items-center justify-between gap-4 pb-4 ${index < certifications.length - 1 ? 'border-b border-white/10' : ''}`}>
+                  <div className="flex items-center gap-6">
+                    <div className="flex-shrink-0">
+                      <CustomIcon 
+                        src={cert.icon} 
+                        alt={cert.name}
+                        fallback={<Award className="w-10 h-10 text-red-400" />}
+                        iconSize="w-12 h-12"
+                      />
                     </div>
-                  </a>
-                </ScrollReveal>
+                    <div>
+                      <h4 className="text-lg md:text-xl font-bold text-white mb-1">{cert.name}</h4>
+                      <p className="text-gray-400">{cert.issuer} • {cert.year}</p>
+                    </div>
+                  </div>
+                  {cert.externalLink && (
+                    <a 
+                      href={cert.externalLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
+                    >
+                      <ExternalLink className="w-5 h-5 text-gray-400" />
+                    </a>
+                  )}
+                </div>
               );
             })}
           </div>
