@@ -15,6 +15,22 @@ export const Projects = () => {
 
   const projects = [
     {
+      title: "Self-Hosted Infrastructure Platform",
+      organization: "Solo Project",
+      period: "Ongoing",
+      description: "Multi-service self-hosted infrastructure on clustered Proxmox VE systems with Docker containers, segmented networking, reverse proxies, and centralized management.",
+      color: "indigo",
+      details: [
+        "Running multi-service self-hosted infrastructure on clustered Proxmox VE systems with a mix of linux containers and virtual machines, including segmented networking, reverse proxies, and centralized management workflows.",
+        "Hosting publicly accessible services such as Matrix Synapse, Mailcow, DoT/DoH, Vaultwarden, Immich, Jellyfin, Pi-hole, and Guacamole with automated TLS and domain-based routing through NGINX.",
+        "Managing infrastructure security and networking through OPNsense, WireGuard, VLAN isolation, firewall policies, DNS filtering, split public/private access paths, and isolated service networks for internet-facing applications.",
+        "Maintaining backup workflows, monitoring systems, health checks, DNS management, container orchestration, and observability pipelines across mixed Linux, Docker, and virtualized environments.",
+      ],
+      technologies: ["Proxmox VE", "Docker", "NGINX", "OPNsense", "WireGuard", "VLAN", "Linux", "ZFS", "Monitoring"],
+      github: null,
+      external: null
+    },
+    {
       title: "IPv6 Deployment Project",
       organization: "NITK Surathkal",
       period: "Feb 2024 - Present",
@@ -27,25 +43,9 @@ export const Projects = () => {
         "Diagnosed and mitigated rogue RA flooding from edge devices using port-based RA filtering and strict ACLs.",
         "Resolved Android SLAAC and DNSv6 failures by reallocating from /56 to /64 and deploying RDNSS-only broadcasts with RADVD; verified IPv6-only reliability by disabling IPv4 on client devices."
       ],
-      technologies: ["IPv6", "DHCPv6", "FreeBSD", "iptables", "Network Security", "Penetration Testing"],
+      technologies: ["IPv6", "DHCPv6", "SLAAC", "FreeBSD", "iptables", "Network Security"],
       github: null,
       external: "https://apnic.foundation/projects/migrating-nitk-surathkal-campus-network-to-ipv6/"
-    },
-    {
-      title: "Custom Ping Utility",
-      organization: null,
-      period: "Oct 2023 - Present",
-      description: "Advanced Python CLI tool for ICMP echo over IPv4/IPv6, with custom checksum, latency metrics, and modular architecture.",
-      color: "blue",
-      details: [
-        "Implemented a Python CLI tool for ICMP echo over IPv4/IPv6, including custom checksum and latency metrics.",
-        "Added features like per-request RTT stats, TTL control, interface selection, and address family enforcement.",
-        "Designed a modular architecture with separate handlers for ICMP logic, IP resolution, and interface detection.",
-        "Automated end-to-end testing via shell script, covering invalid inputs, protocol modes, and device-specific edge cases."
-      ],
-      technologies: ["Python", "Socket Programming", "ICMP", "CLI Tools", "IPv4", "IPv6"],
-      github: "https://github.com/w453y/Custom-Ping-Utility",
-      external: null
     },
     {
       title: "Staging-Server",
@@ -55,10 +55,10 @@ export const Projects = () => {
       color: "orange",
       details: [
         "Developed a Django-based web interface to automate the deployment of Dockerized applications in isolated staging environments, allowing developers to launch test instances from Git URLs with no manual setup.",
-        "Implemented dynamic subdomain generation with automated NGINX configuration to expose each deployment at a unique, testable endpoint.",
+        "Implemented dynamic subdomain generation with automated NGINX configuration to expose each deployment at a unique, testable endpoint; added support for volume mounts, environment variables, and linking auxiliary services like Redis, Celery, and Daphne.",
         "Built developer tooling including a real-time log viewer with search, a browser-based terminal using xterm.js, and asynchronous lifecycle controls with scripting hooks for fine-grained deployment management."
       ],
-      technologies: ["Django", "Docker", "NGINX", "xterm.js", "CI/CD"],
+      technologies: ["Django", "Docker", "NGINX", "xterm.js", "CI/CD", "Redis", "Celery"],
       github: "https://github.com/IRIS-NITK/Staging-Server.git",
       external: null
     },
@@ -66,24 +66,54 @@ export const Projects = () => {
       title: "Personal Portfolio Website",
       organization: null,
       period: "2024 – Present",
-      description: "A full-stack, open-source portfolio and contact management platform built with React, TypeScript, Node.js, and Docker. Features a modern UI, admin dashboard, Gmail-powered contact form, and advanced DevOps deployment.",
+      description: "Full-stack, open-source portfolio and contact management platform built with React, TypeScript, Node.js, and Docker. Features modern UI, admin dashboard, Gmail integration, and advanced DevOps deployment.",
       color: "violet",
       details: [
         "Designed and developed a modern, responsive portfolio using React (Vite, TypeScript, Tailwind CSS) for the frontend and Node.js (Express, TypeScript) for the backend.",
         "Implemented a secure, Gmail-integrated contact form with server-side validation, anti-spam, and email delivery via both App Password and OAuth2.",
-        "Built an admin dashboard for managing all contact messages, viewing unified conversation threads (merging contact form, admin replies, and Gmail messages), and replying directly from the web UI.",
+        "Built an admin dashboard for managing all contact messages, viewing unified conversation threads, and replying directly from the web UI.",
         "Integrated advanced authentication: NGINX-backed auth in production, admin login for dashboard, and flexible dev/prod modes.",
         "Dockerized the entire stack for seamless local development and production deployment, with NGINX reverse proxy, static IPs, and SSL support.",
         "Added health checks, logging, and robust security features (rate limiting, CORS, input validation, security headers, network isolation).",
-        "Wrote comprehensive documentation and set up a GitHub Wiki for easy onboarding, extensibility, and open-source collaboration.",
-        "Extensible architecture: easy to add new React components, backend routes/services, and DevOps enhancements."
       ],
       technologies: [
-        "React", "Vite", "TypeScript", "Tailwind CSS", "Node.js", "Express", "Docker", "NGINX", "Gmail API", "OAuth2", "CI/CD", "Security", "Open Source"
+        "React", "Vite", "TypeScript", "Tailwind CSS", "Node.js", "Express", "Docker", "NGINX", "Gmail API", "OAuth2"
       ],
       github: "https://github.com/w453y/personal-portfolio",
       external: null
-    }
+    },
+    {
+      title: "ngx-http-auth-jwt-gateway",
+      organization: "Solo Project",
+      period: "Active",
+      description: "Centralized JWT authentication gateway for NGINX using Google OAuth 2.0 and ngx-http-auth-jwt-module to secure internal dashboards and self-hosted services.",
+      color: "sky",
+      details: [
+        "Built a centralized authentication gateway for NGINX using Google OAuth 2.0 and the ngx-http-auth-jwt-module to secure internal dashboards, applications, and self-hosted services with JWT-based authentication.",
+        "Supporting subset-based access control with configurable user groups, multiple JWT cookies, dynamic claim injection, and role-specific authentication workflows across shared infrastructure environments.",
+        "Handling secure login flows with signed JWT generation, return-URL preservation, redirect orchestration, session persistence, and hardened cookie policies across distributed subdomains and reverse proxies.",
+        "Running as a fully containerized Docker Compose deployment with environment-driven configuration, integrated rate limiting, and seamless integration into existing NGINX reverse proxy infrastructures.",
+      ],
+      technologies: ["NGINX", "JWT", "Google OAuth", "Docker", "Node.js", "Docker Compose", "Security"],
+      github: "https://github.com/w453y/ngx-http-auth-jwt-gateway",
+      external: null
+    },
+    {
+      title: "Telegram Channel Archiver",
+      organization: "Solo Project",
+      period: "Active",
+      description: "Containerized Telegram media archiver using Telethon MTProto API for downloading and preserving media, captions, timestamps, and metadata from public and private chats.",
+      color: "cyan",
+      details: [
+        "Built a containerized Telegram media archiver using Telethon and the MTProto API to download and preserve media, captions, timestamps, and message metadata from public and private chats.",
+        "Supporting resumable archival workflows with persistent checkpointing, session reuse, metadata tracking, and automatic deduplication to continue interrupted downloads without redundant transfers.",
+        "Managing configurable parallel-download pipelines with environment-driven concurrency tuning, persistent storage management, and large-scale media synchronization under Telegram rate-limiting constraints.",
+        "Running as a reproducible Docker-based deployment with mounted persistent volumes for session handling, metadata databases, progress tracking, and long-term archival storage management.",
+      ],
+      technologies: ["Python", "Telethon", "Docker", "Telegram MTProto API", "Async Programming"],
+      github: "https://github.com/w453y/telegram-channel-archiver",
+      external: null
+    },
   ];
 
   const getColorClasses = (color: string) => {
@@ -92,6 +122,9 @@ export const Projects = () => {
       blue: { gradient: "from-blue-500 to-indigo-500", text: "text-blue-400", bg: "bg-blue-500", border: "border-blue-500/30", glow: "shadow-blue-500/20" },
       orange: { gradient: "from-orange-500 to-red-500", text: "text-orange-400", bg: "bg-orange-500", border: "border-orange-500/30", glow: "shadow-orange-500/20" },
       violet: { gradient: "from-violet-500 to-purple-500", text: "text-violet-400", bg: "bg-violet-500", border: "border-violet-500/30", glow: "shadow-violet-500/20" },
+      sky: { gradient: "from-sky-500 to-blue-500", text: "text-sky-400", bg: "bg-sky-500", border: "border-sky-500/30", glow: "shadow-sky-500/20" },
+      cyan: { gradient: "from-cyan-500 to-teal-500", text: "text-cyan-400", bg: "bg-cyan-500", border: "border-cyan-500/30", glow: "shadow-cyan-500/20" },
+      indigo: { gradient: "from-indigo-500 to-violet-500", text: "text-indigo-400", bg: "bg-indigo-500", border: "border-indigo-500/30", glow: "shadow-indigo-500/20" },
     };
     return colors[color] || colors.violet;
   };

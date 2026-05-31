@@ -23,6 +23,7 @@ export const Navigation = () => {
     { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
     { name: 'Skills', href: '#skills' },
+    { name: 'Open Source', href: '#opensource' },
     { name: 'Education', href: '#education' },
     { name: 'Contact', href: '#contact' },
   ];

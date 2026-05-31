@@ -5,16 +5,35 @@ import { ScrollReveal } from './ui/ScrollReveal';
 export const Experience = () => {
   const experiences = [
     {
-      title: "Project Trainee Intern",
+      title: "Firmware Engineer",
+      company: "Quantum Networks",
+      period: "DEC 2025 - Present",
+      location: "Remote",
+      description: "OpenWrt, Qualcomm IPQ60xx, U-Boot, Secure Boot, Firmware Engineering",
+      achievements: [
+        "Implemented FIT image verification and verified boot in U-Boot for OpenWrt-based AP platforms, enforcing authenticated kernel and rootfs validation before Linux boot handoff across dual-image NOR+NAND layouts.",
+        "Engineered and validated a complete Qualcomm IPQ60xx secure-boot workflow, including OEM key provisioning, signed-image generation, fuse payload creation, and authenticated boot-chain verification from PBL to Linux.",
+        "Analyzed and debugged Qualcomm Sectools, MBN v6 metadata, soc_vers handling, and QFPROM fuse-generation logic to diagnose and resolve secure-boot failures on IPQ6010/IPQ6018 platforms.",
+        "Built a hardened OpenWrt/QSDK firmware-signing pipeline integrating RSA-PSS image signing, SHA-384 fuse hashing, validation guardrails, automated sec.dat generation, and signed recovery-image packaging.",
+        "Performed low-level firmware debugging and recovery using U-Boot, EDL/Sahara, Firehose, serial-console tracing, SPI-NOR analysis, staged flashing, and partition-level validation workflows.",
+        "Identified and resolved multiple boot-chain issues including incorrect soc_vers metadata, fuse-enforcement mismatches, OEM/QTI signing inconsistencies, and board-specific DDR CDT recovery limitations.",
+      ],
+      color: "emerald",
+      icon: "/uploads/quantum-networks.svg",
+      externalLink: "https://www.qntmnet.com/"
+    },
+    {
+      title: "Intern",
       company: "Tata Communications",
       period: "May 2025 - July 2025",
       location: "Pune, India",
-      description: "Network Infrastructure, Virtualization, Storage Solutions, High Availability",
+      description: "MPTCP, OpenWrt, Proxmox VE, iSCSI, VLANs, QoS, ZFS, RAID",
       achievements: [
-        "Designed and deployed a 2-node Proxmox VE cluster on Dell EMC PowerEdge R650xs servers with ZFS-mirror storage for enhanced system reliability.",
-        "Integrated Dell EMC ME5024 SAN with 8×1.92 TB SAS SSDs in RAID-6, implementing dual-controller iSCSI multipathing for high availability.",
-        "Developed a switching and aggregation engine for WAN failover, enabling seamless connectivity across fiber and 4G/5G networks.",
-        "Implemented LVM over multipath iSCSI LUNs to provide shared block storage for virtualized workloads.",
+        "Engineered and deployed a multi-link WAN switching and aggregation engine to seamlessly combine and failover across uplink connections, ensuring high availability and consistent performance in enterprise environments.",
+        "Built and configured a 2-node Proxmox VE cluster on Dell EMC PowerEdge servers with local ZFS-mirror storage, enhancing workload reliability, fault tolerance, and simplified disaster recovery in production environments.",
+        "Integrated and optimized Dell EMC ME5024 SAN storage in RAID-6 with dual-controller iSCSI multipathing, delivering high-availability shared block storage with consistent performance for clustered virtual machines.",
+        "Designed and implemented performance-isolated networking by segmenting management, cluster, and storage traffic with dedicated NICs, VLANs, and redundant SAN paths between compute nodes and storage controllers.",
+        "Validated system resilience through structured failover testing, confirming uninterrupted I/O during simulated link and controller outages, and produced architecture and operational documentation for ongoing use.",
       ],
       color: "violet",
       icon: "/uploads/tata.svg",
@@ -23,14 +42,15 @@ export const Experience = () => {
     {
       title: "Systems Engineer and Lead",
       company: "IRIS, NITK",
-      period: "May 2023 - Present",
+      period: "May 2023 - May 2026",
       location: "NITK Surathkal, India",
       description: "Networking, DevOps, Ruby, Virtualization, Docker, Monitoring, CI/CD",
       achievements: [
-        "Deployed Dockerized Moodle testbed with Docker Compose for isolated API testing and rapid iteration.",
-        "Built JWT authentication system using a custom NGINX module and Rails service to secure internal dashboards and tools.",
-        "Set up Zabbix and Grafana monitoring with Discord alerts for SSL expiry and service anomalies.",
-        "Migrated 30+ containers and 15 VMs from standalone Proxmox and Nutanix to a high-availability Proxmox cluster.",
+        "Designed and deployed a Docker-based Moodle test environment using Docker Compose for isolated API testing, enabling faster development cycles and reducing deployment risks.",
+        "Implemented a secure JWT-based authentication system by compiling a custom NGINX module and integrating it with a Rails service, ensuring controlled access to internal dashboards and administrative tools.",
+        "Built a centralized monitoring stack with Zabbix and Grafana, integrating Discord webhook alerts for SSL certificate expiry, service outages, and infrastructure anomalies across bare-metal and virtualized environments.",
+        "Migrated GitLab Enterprise from a host-based deployment to a Dockerized setup with automated NAS backups, health checks, and real-time notifications, improving maintainability and recovery capability.",
+        "Engineered a containerized backup solution leveraging the Ruby backup gem and supercronic to automate database and file backups to both NAS and Ceph S3 targets, and executed a zero-downtime migration of 40+ containers and 15+ VMs from legacy Proxmox and Nutanix systems to a high-availability Proxmox cluster.",
       ],
       color: "pink",
       icon: "/uploads/iris.png",
@@ -59,6 +79,7 @@ export const Experience = () => {
       violet: { gradient: "from-violet-500 to-purple-500", text: "text-violet-400", bg: "bg-violet-500", border: "border-violet-500/30" },
       pink: { gradient: "from-pink-500 to-rose-500", text: "text-pink-400", bg: "bg-pink-500", border: "border-pink-500/30" },
       cyan: { gradient: "from-cyan-500 to-teal-500", text: "text-cyan-400", bg: "bg-cyan-500", border: "border-cyan-500/30" },
+      emerald: { gradient: "from-emerald-500 to-teal-500", text: "text-emerald-400", bg: "bg-emerald-500", border: "border-emerald-500/30" },
     };
     return colors[color] || colors.violet;
   };

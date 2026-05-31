@@ -14,21 +14,21 @@ export const About = () => {
     {
       icon: User,
       title: "Who I Am",
-      description: "A B.Tech student with a knack for building secure, scalable infrastructure. I design resilient network architectures, automate workflows, and deploy high-availability systems across diverse environments.",
+      description: "A B.Tech graduate from NITK with expertise in Network Engineering, DevOps, and Firmware Development. I design resilient network architectures, automate infrastructure workflows, develop firmware solutions, and deploy high-availability systems across diverse environments.",
       gradient: "from-violet-500 to-purple-500",
       delay: "0.1s"
     },
     {
       icon: Target,
       title: "Core Competencies",
-      description: "Network Engineering (IPv4/IPv6, Routing, VLANs, Firewalls, VPNs) • DevOps & Automation (Docker, Kubernetes, CI/CD) • Cloud & Virtualization (AWS, GCP, Proxmox) • Security & Research",
+      description: "Network Engineering (IPv4/IPv6, Routing, VLANs, Security, NAC) • Firmware Development (U-Boot, OpenWrt, Qualcomm IPQ60xx, Secure Boot) • DevOps & Automation (Docker, Kubernetes, CI/CD, Proxmox) • Cloud & Virtualization (AWS, GCP, Proxmox VE)",
       gradient: "from-pink-500 to-rose-500",
       delay: "0.2s"
     },
     {
       icon: Lightbulb,
       title: "What Drives Me",
-      description: "I thrive on solving complex networking challenges, automating infrastructure, and sharing knowledge through workshops and open-source projects. Driven by curiosity and a security-first mindset.",
+      description: "I thrive on solving complex engineering challenges, designing resilient infrastructure, and sharing knowledge through technical workshops and open-source contributions. Passionate about security, automation, and empowering the tech community with cutting-edge solutions.",
       gradient: "from-cyan-500 to-teal-500",
       delay: "0.3s"
     }

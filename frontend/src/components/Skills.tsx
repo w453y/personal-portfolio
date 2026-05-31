@@ -75,6 +75,12 @@ export const Skills = () => {
     { name: 'GitHub Actions', icon: <SiGithubactions color="#2088FF" /> },
     { name: 'Nutanix', icon: <SiNutanix color="#00A2E8" /> },
     { name: 'Shell Utilities', icon: <SiShell color="#FBBF24" /> },
+    { name: 'OpenWrt', icon: <FaLinux color="#FA8020" /> },
+    { name: 'U-Boot', icon: <FaLinux color="#76B900" /> },
+    { name: 'Qualcomm IPQ', icon: <FaLinux color="#3F51B5" /> },
+    { name: 'Firmware Dev', icon: <FaServer color="#E91E63" /> },
+    { name: 'Telethon', icon: <FaJs color="#0088CC" /> },
+    { name: 'OAuth 2.0', icon: <FaShieldAlt color="#34A853" /> },
   ];
 
   const certifications = [
@@ -86,6 +92,59 @@ export const Skills = () => {
       icon: "/uploads/google.svg",
       externalLink: "https://www.coursera.org/account/accomplishments/specialization/certificate/Z2JGANLU4RUZ"
     },
+    {
+      name: "OCI Certified Architect Associate",
+      issuer: "Oracle",
+      year: "2026",
+      color: "orange",
+      icon: "/uploads/oracle-architect.svg",
+      externalLink: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=CFED96548927A13C250B52BF979EF4114E4E9C19E9A93E748B113C791C53E999"
+    },
+    {
+      name: "OCI Certified DevOps Professional",
+      issuer: "Oracle",
+      year: "2026",
+      color: "violet",
+      icon: "/uploads/oracle-devops.svg",
+      externalLink: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=8C436395BEBA54D2637B37379F975BA4443115E7A737EFFBB989044F90C9EB9D"
+    },
+  ];
+
+  const openSourceContributions = [
+    {
+      title: "Proxmox VE",
+      organization: "Proxmox",
+      repository: "proxmox-ve",
+      issue: "6224",
+      status: "Patch Review",
+      description: "Enterprise-grade virtualization platform",
+      color: "orange",
+      details: [
+        "Investigated and reproduced a Proxmox VE backend issue causing the GUI 'Disks' page to hang indefinitely when querying SMART data from USB-attached SSDs through smartctl.",
+        "Traced the issue through internal Perl-based PVE API disk-management workflows, identified blocking SMART queries without timeout handling, and validated the root cause through targeted debugging and controlled testing.",
+        "Collaborated with upstream Proxmox developers by providing diagnostic data, timing analysis, reproduction steps, and framework-level observations that contributed to an official timeout-handling patch review.",
+      ],
+      technologies: ["Proxmox VE", "Perl", "Storage", "Debugging", "SMART"],
+      github: "https://bugzilla.proxmox.com/show_bug.cgi?id=6224",
+      external: "https://www.proxmox.com/en/"
+    },
+    {
+      title: "ngx-http-auth-jwt-module",
+      organization: "TeslaGov",
+      repository: "ngx-http-auth-jwt-module",
+      pullRequest: "152",
+      status: "Merged v2.4.0",
+      description: "NGINX JWT authentication module",
+      color: "violet",
+      details: [
+        "Added runtime-variable support for the auth_jwt_enabled directive in the upstream JWT authentication module, enabling conditional JWT enforcement based on request context, IP ranges, and dynamically evaluated nginx variables.",
+        "Implemented support for integrations with nginx geo and map modules to allow scenarios such as VPN subnet whitelisting, selective authentication bypass, and runtime-controlled access policies for protected services.",
+        "Collaborated with upstream maintainers on testing, code cleanup, and integration workflows; contribution was merged into the official project.",
+      ],
+      technologies: ["NGINX", "C", "Authentication", "JWT", "Open Source"],
+      github: "https://github.com/TeslaGov/ngx-http-auth-jwt-module/pull/152",
+      external: "https://github.com/TeslaGov/ngx-http-auth-jwt-module"
+    },
   ];
 
   const talks = [
@@ -93,7 +152,7 @@ export const Skills = () => {
       title: "Securing IPv6 Networks with Firewalls",
       event: "Workshop Session",
       organizer: "IIESOC, Dept. of CSE and COSH-NITK Surathkal",
-      description: "Delivered a technical session on IPv6 network security, covering firewall architecture, stateful filtering, and deployment best practices for dual-stack environments.",
+      description: "Delivered a technical session on IPv6 network security, detailing core firewall architecture, nuances of stateful filtering, key differences from IPv4, rule translation strategies, address scope handling, and deployment best practices for real-world dual-stack environments.",
       color: "blue",
       icon: "/uploads/nitk.svg",
       fallback: <Presentation className="w-6 h-6 text-blue-400" />,
@@ -103,7 +162,7 @@ export const Skills = () => {
       title: "WAN Aggregation using OpenMPTCProuter (OMR)",
       event: "FOSS Meetup 2024",
       organizer: "FOSS United",
-      description: "Introduced Multipath TCP (MPTCP) and OpenMPTCProuter, demonstrated real-world WAN aggregation, failover, and dynamic routing on Raspberry Pi.",
+      description: "Introduced Multipath TCP (MPTCP) and its role in multi-homed network scenarios for bandwidth aggregation and automatic failover. Demonstrated hands-on setup of OMR on Raspberry Pi with real-world use cases.",
       color: "violet",
       icon: "/uploads/foss.svg",
       fallback: <Presentation className="w-6 h-6 text-purple-400" />,
@@ -113,11 +172,21 @@ export const Skills = () => {
       title: "Introduction to Self-Hosting with Free and Open Source Tools",
       event: "FOSS Meetup 2025",
       organizer: "FOSS United",
-      description: "Presented self-hosting as a privacy-respecting, cloud-independent approach, covering Docker, Proxmox VE, reverse proxies, and backup best practices.",
+      description: "Presented self-hosting as a privacy-respecting, cloud-independent approach, showcasing alternatives like Nextcloud, Jellyfin, and Vikunja. Delivered deep dive into Proxmox VE, Docker, reverse proxies, and backup best practices.",
       color: "emerald",
       icon: "/uploads/foss.svg",
       fallback: <Presentation className="w-6 h-6 text-emerald-400" />,
-      externalLink: "https://fossunited.org/c/mangalore/mangalore-may-2025/cfp/8dk9fae74j"
+      externalLink: "https://fossunited.org/c/mangalore/mangalore-august-2025/cfp/8dk9fae74j"
+    },
+    {
+      title: "Open Source Monitoring in Action",
+      event: "FOSS Meetup 2025",
+      organizer: "FOSS United",
+      description: "Delivered comprehensive session on designing scalable, vendor-neutral monitoring architectures using Zabbix, LibreNMS, and ClickHouse. Demonstrated hybrid monitoring pipelines and cost reduction strategies.",
+      color: "pink",
+      icon: "/uploads/foss.svg",
+      fallback: <Presentation className="w-6 h-6 text-pink-400" />,
+      externalLink: "https://fossunited.org/c/mangalore/mangalore-october/cfp/cqf9edi8jv"
     }
   ];
 
@@ -127,6 +196,7 @@ export const Skills = () => {
       violet: { gradient: "from-violet-500 to-purple-500", text: "text-violet-400", border: "border-violet-500/30" },
       emerald: { gradient: "from-emerald-500 to-teal-500", text: "text-emerald-400", border: "border-emerald-500/30" },
       red: { gradient: "from-red-500 to-orange-500", text: "text-red-400", border: "border-red-500/30" },
+      orange: { gradient: "from-orange-500 to-amber-500", text: "text-orange-400", border: "border-orange-500/30" },
       pink: { gradient: "from-pink-500 to-rose-500", text: "text-pink-400", border: "border-pink-500/30" },
     };
     return colors[color] || colors.violet;
@@ -185,41 +255,74 @@ export const Skills = () => {
           </div>
         </ScrollReveal>
 
-        {/* Certifications */}
-        <ScrollReveal className="max-w-4xl mx-auto mb-16" delay={150}>
+        {/* Open Source Contributions */}
+        <ScrollReveal className="max-w-7xl mx-auto mb-16" delay={125}>
           <div className="text-center mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Certifications</h3>
-            <div className="h-px w-16 bg-gradient-to-r from-transparent via-violet-500 to-transparent mx-auto" />
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Open Source Contributions</h3>
+            <div className="h-px w-24 bg-gradient-to-r from-transparent via-emerald-500 to-transparent mx-auto" />
           </div>
-          <div className="p-6 md:p-8 rounded-2xl liquid-glass">
-            {certifications.map((cert, index) => {
-              const colors = getColorClasses(cert.color);
+          <div className="space-y-6">
+            {openSourceContributions.map((contribution, index) => {
+              const colors = getColorClasses(contribution.color);
               return (
-                <div key={index} className="flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-6">
-                    <div className="flex-shrink-0">
-                      <CustomIcon 
-                        src={cert.icon} 
-                        alt={cert.name}
-                        fallback={<Award className="w-10 h-10 text-red-400" />}
-                        iconSize="w-12 h-12"
-                      />
+                <div key={index} className="p-6 md:p-8 rounded-2xl liquid-glass">
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2 flex-wrap">
+                        <h4 className="text-2xl font-bold text-white">{contribution.title}</h4>
+                        <a
+                          href={contribution.external}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 hover:scale-110"
+                        >
+                          <ExternalLink className="w-5 h-5 text-gray-400 hover:text-white" />
+                        </a>
+                      </div>
+                      <div className="flex items-center gap-3 flex-wrap mb-3">
+                        <p className={`text-lg font-semibold ${colors.text}`}>{contribution.organization}</p>
+                        <div className="flex items-center gap-2 text-gray-500 text-sm">
+                          <Sparkles size={14} />
+                          <code className="bg-white/5 px-2 py-1 rounded text-xs">{contribution.repository}</code>
+                        </div>
+                      </div>
+                      <p className="text-gray-400 text-sm">{contribution.description}</p>
                     </div>
-                    <div>
-                      <h4 className="text-lg md:text-xl font-bold text-white mb-1">{cert.name}</h4>
-                      <p className="text-gray-400">{cert.issuer} • {cert.year}</p>
+                    <div className="flex gap-2 flex-wrap lg:flex-col">
+                      {(contribution as any).pullRequest && (
+                        <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border ${colors.border} text-sm font-medium text-gray-300`}>
+                          <Award size={14} />
+                          PR #{(contribution as any).pullRequest}
+                        </span>
+                      )}
+                      {(contribution as any).issue && (
+                        <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border ${colors.border} text-sm font-medium text-gray-300`}>
+                          <Award size={14} />
+                          Issue #{(contribution as any).issue}
+                        </span>
+                      )}
+                      <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r ${colors.gradient} text-white text-sm font-medium`}>
+                        {contribution.status}
+                      </span>
                     </div>
                   </div>
-                  {cert.externalLink && (
-                    <a 
-                      href={cert.externalLink} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
-                    >
-                      <ExternalLink className="w-5 h-5 text-gray-400" />
-                    </a>
-                  )}
+                  <div className="mb-6 pb-6 border-b border-white/10">
+                    <ul className="space-y-3">
+                      {contribution.details.map((detail, i) => (
+                        <li key={i} className="flex items-start gap-3 group/item">
+                          <div className={`w-1.5 h-1.5 ${colors.bg} rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform`} />
+                          <span className="text-gray-400 text-sm leading-relaxed group-hover/item:text-gray-300 transition-colors">{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {contribution.technologies.map((tech, i) => (
+                      <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               );
             })}
@@ -271,6 +374,47 @@ export const Skills = () => {
                     <p className="text-gray-400 text-sm leading-relaxed">{talk.description}</p>
                   </div>
                 </ScrollReveal>
+              );
+            })}
+          </div>
+        </ScrollReveal>
+
+        {/* Certifications */}
+        <ScrollReveal className="max-w-4xl mx-auto mb-16" delay={150}>
+          <div className="text-center mb-8">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Certifications</h3>
+            <div className="h-px w-16 bg-gradient-to-r from-transparent via-violet-500 to-transparent mx-auto" />
+          </div>
+          <div className="p-6 md:p-8 rounded-2xl liquid-glass space-y-4">
+            {certifications.map((cert, index) => {
+              const colors = getColorClasses(cert.color);
+              return (
+                <div key={index} className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-6">
+                    <div className="flex-shrink-0">
+                      <CustomIcon 
+                        src={cert.icon} 
+                        alt={cert.name}
+                        fallback={<Award className="w-10 h-10 text-red-400" />}
+                        iconSize="w-12 h-12"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="text-lg md:text-xl font-bold text-white mb-1">{cert.name}</h4>
+                      <p className="text-gray-400">{cert.issuer} • {cert.year}</p>
+                    </div>
+                  </div>
+                  {cert.externalLink && (
+                    <a 
+                      href={cert.externalLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
+                    >
+                      <ExternalLink className="w-5 h-5 text-gray-400" />
+                    </a>
+                  )}
+                </div>
               );
             })}
           </div>
