@@ -283,9 +283,9 @@ export const Skills = () => {
                     </div>
 
                     {/* Title and org */}
-                    <h4 className="text-2xl font-bold text-white mb-2">{contribution.title}</h4>
-                    <p className={`text-lg font-semibold ${colors.text} mb-4`}>{contribution.organization}</p>
-                    <p className="text-gray-400 text-sm mb-6 flex-grow">{contribution.description}</p>
+                    <h4 className="text-xl md:text-2xl font-bold text-white mb-2">{contribution.title}</h4>
+                    <p className={`text-lg font-semibold ${colors.text} mb-2`}>{contribution.organization}</p>
+                    <p className="text-gray-400 mb-6 leading-relaxed flex-grow">{contribution.description}</p>
 
                     {/* Badges */}
                     <div className="flex gap-2 flex-wrap mb-6 pb-6 border-b border-white/10">
@@ -317,19 +317,17 @@ export const Skills = () => {
                     </div>
 
                     {/* Details */}
-                    <div className="mb-6 pb-6 border-b border-white/10">
-                      <ul className="space-y-2">
-                        {contribution.details.slice(0, 2).map((detail, i) => (
-                          <li key={i} className="flex items-start gap-3 group/item">
-                            <div className={`w-1.5 h-1.5 ${colors.bg} rounded-full mt-2 flex-shrink-0`} />
-                            <span className="text-gray-400 text-xs leading-relaxed">{detail}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    <ul className="space-y-3 mb-6 pb-6 border-b border-white/10">
+                      {contribution.details.slice(0, 2).map((detail, i) => (
+                        <li key={i} className="flex items-start gap-3 group/item">
+                          <div className={`w-1.5 h-1.5 ${colors.bg} rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform`} />
+                          <span className="text-gray-400 text-sm leading-relaxed group-hover/item:text-gray-300 transition-colors">{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
 
                     {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mt-auto">
+                    <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-white/5">
                       {contribution.technologies.slice(0, 4).map((tech, i) => (
                         <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300">
                           {tech}
