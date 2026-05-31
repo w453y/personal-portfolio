@@ -63,7 +63,7 @@ export const Projects = () => {
       external: null
     },
     {
-      title: "Personal Portfolio Website",
+      title: "personal-portfolio",
       organization: null,
       period: "2024 – Present",
       description: "Full-stack, open-source portfolio and contact management platform built with React, TypeScript, Node.js, and Docker. Features modern UI, admin dashboard, Gmail integration, and advanced DevOps deployment.",
@@ -99,7 +99,7 @@ export const Projects = () => {
       external: null
     },
     {
-      title: "Telegram Channel Archiver",
+      title: "tg-archiver",
       organization: "Solo Project",
       period: "Active",
       description: "Containerized Telegram media archiver using Telethon MTProto API for downloading and preserving media, captions, timestamps, and metadata from public and private chats.",
@@ -111,7 +111,7 @@ export const Projects = () => {
         "Running as a reproducible Docker-based deployment with mounted persistent volumes for session handling, metadata databases, progress tracking, and long-term archival storage management.",
       ],
       technologies: ["Python", "Telethon", "Docker", "Telegram MTProto API", "Async Programming"],
-      github: "https://github.com/w453y/telegram-channel-archiver",
+      github: "https://github.com/w453y/tg-archiver",
       external: null
     },
   ];
