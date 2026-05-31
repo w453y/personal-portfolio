@@ -320,8 +320,9 @@ export const Skills = () => {
                     <ul className="space-y-3 mb-6 pb-6 border-b border-white/10">
                       {contribution.details.slice(0, 2).map((detail, i) => (
                         <li key={i} className="flex items-start gap-3 group/item">
-                          <div className={`w-1.5 h-1.5 ${colors.bg} rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform`} />
-                          <span className="text-gray-400 text-sm leading-relaxed group-hover/item:text-gray-300 transition-colors">{detail}</span>
+                          <span className="text-gray-400 text-sm leading-relaxed group-hover/item:text-gray-300 transition-colors">
+                            <span className="font-bold">•</span> {detail}
+                          </span>
                         </li>
                       ))}
                     </ul>
