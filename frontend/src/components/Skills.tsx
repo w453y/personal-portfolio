@@ -290,16 +290,26 @@ export const Skills = () => {
                     </div>
                     <div className="flex gap-2 flex-wrap lg:flex-col">
                       {(contribution as any).pullRequest && (
-                        <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border ${colors.border} text-sm font-medium text-gray-300`}>
+                        <a
+                          href={contribution.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border ${colors.border} text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-300 hover:scale-105`}
+                        >
                           <Award size={14} />
                           PR #{(contribution as any).pullRequest}
-                        </span>
+                        </a>
                       )}
                       {(contribution as any).issue && (
-                        <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border ${colors.border} text-sm font-medium text-gray-300`}>
+                        <a
+                          href={contribution.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border ${colors.border} text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-300 hover:scale-105`}
+                        >
                           <Award size={14} />
                           Issue #{(contribution as any).issue}
-                        </span>
+                        </a>
                       )}
                       <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r ${colors.gradient} text-white text-sm font-medium`}>
                         {contribution.status}
