@@ -434,6 +434,7 @@ export const Skills = () => {
         </ScrollReveal>
 
         {/* Leadership & Community */}
+        {/* DISABLED - TEMPORARY HIDE
         <ScrollReveal className="max-w-5xl mx-auto" delay={250}>
           <div className="text-center mb-8">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Leadership & Community</h3>
@@ -477,6 +478,7 @@ export const Skills = () => {
             </ul>
           </div>
         </ScrollReveal>
+        */}
       </div>
       
       {/* Bottom gradient fade */}
