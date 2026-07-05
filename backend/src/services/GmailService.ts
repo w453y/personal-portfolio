@@ -1,6 +1,11 @@
 import { google } from 'googleapis';
-import { OAuth2Client } from 'google-auth-library';
 import { logger } from '../utils/logger.js';
+
+// Derive the client type from the constructor actually used, instead of
+// importing OAuth2Client from 'google-auth-library': npm can resolve two
+// different copies of that package (googleapis vs googleapis-common),
+// whose declarations are incompatible even though runtime is identical.
+type OAuth2Client = InstanceType<typeof google.auth.OAuth2>;
 
 export interface GmailMessage {
   id: string;
@@ -50,7 +55,8 @@ export class GmailService {
       this.oauth2Client.setCredentials({
         refresh_token: process.env.GMAIL_REFRESH_TOKEN
       });
-      this.gmail = google.gmail({ version: 'v1', auth: this.oauth2Client });
+      // auth cast: googleapis-common may hold its own google-auth-library copy
+      this.gmail = google.gmail({ version: 'v1', auth: this.oauth2Client as any });
       this.isInitialized = true;
       logger.info('Gmail API initialized successfully');
     } else {
