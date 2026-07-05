@@ -1,11 +1,11 @@
 {
-  "name": "Abdul Wasey - Portfolio",
+  "name": "Abdul Wasey — Network & Firmware Engineer",
   "short_name": "Abdul Wasey",
-  "description": "Network Engineer, Systems Architect & Open-Source Enthusiast",
+  "description": "Network & firmware engineer — secure boot, IPv6, self-hosted infrastructure, open source.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#3b82f6",
+  "background_color": "#0a0a0a",
+  "theme_color": "#8b5cf6",
   "icons": [
     {
       "src": "/uploads/w453y.svg",

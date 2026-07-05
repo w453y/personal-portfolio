@@ -4,6 +4,8 @@ import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaReddit } from 'react-ic
 import { toast } from 'sonner';
 import { submitContactForm, checkBackendHealth, validateEmail, type ContactFormData } from '@/lib/api';
 import { ScrollReveal } from './ui/ScrollReveal';
+import { SectionHeader } from './ui/SectionHeader';
+import { SpotlightCard } from './ui/SpotlightCard';
 
 export const Contact = () => {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -273,89 +275,72 @@ export const Contact = () => {
   return (
     <section 
       id="contact" 
-      className="relative py-8 md:py-12 overflow-hidden bg-[#0a0a0a]"
+      className="relative py-8 md:py-12 overflow-hidden"
     >
       {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/3 -left-48 w-96 h-96 bg-violet-600/8 rounded-full blur-[150px] animate-pulse-glow" />
-        <div className="absolute bottom-1/3 -right-48 w-96 h-96 bg-pink-600/8 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
-      </div>
       
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <ScrollReveal className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="text-white">Get In </span>
-            <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Touch</span>
-          </h2>
-          <div className="flex items-center justify-center gap-2">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent to-violet-500" />
-            <div className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" />
-            <div className="h-px w-24 bg-gradient-to-r from-violet-500 via-pink-500 to-cyan-500" />
-            <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <div className="h-px w-12 bg-gradient-to-l from-transparent to-cyan-500" />
-          </div>
-          <p className="text-gray-400 mt-6 max-w-lg mx-auto">
-            Feel free to reach out for collaborations or just a friendly chat!
-          </p>
-        </ScrollReveal>
+        <SectionHeader
+          title="Get In"
+          highlight="Touch"
+          subtitle="Feel free to reach out for collaborations or just a friendly chat!"
+        />
         
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Information */}
-          <ScrollReveal className="space-y-8" delay={100} direction="left">
-            <div className="flex items-center gap-4 group">
-              <div className="p-3 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 group-hover:scale-110 transition-transform">
-                <Mail className="text-white" size={20} />
+          <ScrollReveal className="space-y-6" delay={100} direction="left">
+            <SpotlightCard className="p-6 md:p-8" tilt={0}>
+              <div className="flex items-center gap-2 mb-5 font-mono text-xs text-gray-500">
+                <Server className="w-3.5 h-3.5 text-violet-400" />
+                <span>contact.yaml</span>
               </div>
-              <div>
-                <h4 className="text-lg font-semibold text-white">Email</h4>
-                <p className="text-gray-400">awasey8905@gmail.com</p>
+              <div className="font-mono text-sm space-y-3">
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-cyan-400 w-24">email:</span>
+                  <a href="mailto:awasey8905@gmail.com" className="text-gray-300 hover:text-violet-400 transition-colors">awasey8905@gmail.com</a>
+                </div>
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-cyan-400 w-24">phone:</span>
+                  <a href="tel:+917090344713" className="text-gray-300 hover:text-violet-400 transition-colors">+91 70903 44713</a>
+                </div>
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-cyan-400 w-24">location:</span>
+                  <span className="text-gray-300">Mangalore, India <span className="text-gray-600"># IST (UTC+5:30)</span></span>
+                </div>
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-cyan-400 w-24">status:</span>
+                  <span className="text-emerald-400 flex items-center gap-2"><span className="led" />open to opportunities</span>
+                </div>
               </div>
-            </div>
-            
-            <div className="flex items-center gap-4 group">
-              <div className="p-3 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 group-hover:scale-110 transition-transform">
-                <Phone className="text-white" size={20} />
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold text-white">Phone</h4>
-                <p className="text-gray-400">+91-7090344713</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-4 group">
-              <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-500 group-hover:scale-110 transition-transform">
-                <MapPin className="text-white" size={20} />
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold text-white">Location</h4>
-                <p className="text-gray-400">Mangalore, India</p>
-              </div>
-            </div>
+            </SpotlightCard>
 
-            {/* Social Media Links */}
-            <div className="pt-6">
-              <h4 className="text-lg font-semibold text-white mb-4">Connect with me</h4>
+            <div>
+              <h4 className="font-mono text-sm text-gray-500 mb-4"># or find me here</h4>
               <div className="flex gap-3">
                 {socialLinks.map((social, index) => (
-                  <a 
+                  <a
                     key={index}
-                    href={social.href} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className={`p-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 transition-all duration-300 hover:scale-110 hover:bg-white/10 ${social.color}`}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`p-3 rounded-md term-chip text-gray-400 transition-all duration-300 hover:scale-110 ${social.color}`}
                   >
                     <social.icon size={20} />
                   </a>
                 ))}
               </div>
             </div>
+
+            <p className="text-gray-500 leading-relaxed text-sm">
+              Feel free to reach out about roles, collaborations, or
+              open-source projects. I usually reply within a day.
+            </p>
           </ScrollReveal>
-          
+
           {/* Contact Form */}
           <ScrollReveal delay={150} direction="right">
-            <div className="p-6 md:p-8 rounded-2xl liquid-glass">
+            <SpotlightCard className="p-6 md:p-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-white">Send Message</h3>
                 {getBackendStatusIndicator()}
@@ -480,15 +465,31 @@ export const Contact = () => {
                 </p>
               </div>
             )}
-            </div>
+            </SpotlightCard>
           </ScrollReveal>
         </div>
         
         {/* Footer */}
-        <ScrollReveal className="text-center mt-20 pt-8 border-t border-white/5" delay={200}>
-          <p className="text-gray-600 text-sm">
-            © {new Date().getFullYear()} Abdul Wasey. All rights reserved.
-          </p>
+        <ScrollReveal className="mt-20 pt-8 border-t border-white/5" delay={200}>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <img src="/uploads/w453y.svg" alt="w453y" className="h-8 w-8" />
+              <p className="font-mono text-xs text-gray-600">
+                © {new Date().getFullYear()} Abdul Wasey · w453y.me
+              </p>
+            </div>
+            <p className="font-mono text-xs text-gray-600">
+              built with React, TypeScript, and Docker ·{' '}
+              <a
+                href="https://github.com/w453y/personal-portfolio"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-violet-400 transition-colors"
+              >
+                source on GitHub
+              </a>
+            </p>
+          </div>
         </ScrollReveal>
       </div>
     </section>

@@ -22,6 +22,7 @@ export default {
 			fontFamily: {
 				'sans': ['Inter', 'system-ui', 'sans-serif'],
 				'mono': ['JetBrains Mono', 'monospace'],
+				'display': ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -231,6 +232,35 @@ export default {
 					'50%': {
 						borderRadius: '30% 60% 70% 40%/50% 60% 30% 60%'
 					}
+				},
+				'marquee': {
+					'0%': { transform: 'translateX(0)' },
+					'100%': { transform: 'translateX(-50%)' }
+				},
+				'marquee-reverse': {
+					'0%': { transform: 'translateX(-50%)' },
+					'100%': { transform: 'translateX(0)' }
+				},
+				'blink': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0' }
+				},
+				'aurora-drift': {
+					'0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+					'33%': { transform: 'translate(40px, -30px) scale(1.08)' },
+					'66%': { transform: 'translate(-30px, 25px) scale(0.95)' }
+				},
+				'shine': {
+					'0%': { backgroundPosition: '200% center' },
+					'100%': { backgroundPosition: '-200% center' }
+				},
+				'line-grow': {
+					'0%': { transform: 'scaleY(0)' },
+					'100%': { transform: 'scaleY(1)' }
+				},
+				'ping-slow': {
+					'0%': { transform: 'scale(1)', opacity: '0.6' },
+					'80%, 100%': { transform: 'scale(2.2)', opacity: '0' }
 				}
 			},
 			animation: {
@@ -251,7 +281,14 @@ export default {
 				'gradient-x': 'gradient-x 3s ease infinite',
 				'text-glow': 'text-glow 2s ease-in-out infinite',
 				'border-flow': 'border-flow 3s ease-in-out infinite',
-				'morph': 'morph 8s ease-in-out infinite'
+				'morph': 'morph 8s ease-in-out infinite',
+				'marquee': 'marquee 40s linear infinite',
+				'marquee-reverse': 'marquee-reverse 40s linear infinite',
+				'blink': 'blink 1s step-end infinite',
+				'aurora-drift': 'aurora-drift 18s ease-in-out infinite',
+				'shine': 'shine 5s linear infinite',
+				'line-grow': 'line-grow 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+				'ping-slow': 'ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite'
 			}
 		}
 	},

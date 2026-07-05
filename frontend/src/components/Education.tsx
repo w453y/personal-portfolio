@@ -1,38 +1,27 @@
 import React from 'react';
 import { GraduationCap, Calendar, MapPin, Award, BookOpen, ExternalLink } from 'lucide-react';
 import { ScrollReveal } from './ui/ScrollReveal';
+import { SectionHeader } from './ui/SectionHeader';
+import { SpotlightCard } from './ui/SpotlightCard';
 
 export const Education = () => {
   return (
     <section 
       id="education" 
-      className="relative py-8 md:py-12 overflow-hidden bg-[#0a0a0a]"
+      className="relative py-8 md:py-12 overflow-hidden"
     >
       {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-48 w-96 h-96 bg-blue-600/8 rounded-full blur-[150px] animate-pulse-glow" />
-        <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-indigo-600/8 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
-      </div>
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <ScrollReveal className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="text-white">My </span>
-            <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent">Education</span>
-          </h2>
-          <div className="flex items-center justify-center gap-2">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent to-blue-500" />
-            <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-            <div className="h-px w-24 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500" />
-            <div className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <div className="h-px w-12 bg-gradient-to-l from-transparent to-violet-500" />
-          </div>
-        </ScrollReveal>
+        <SectionHeader
+          title="My"
+          highlight="Education"
+          accent="sky"
+        />
 
         <ScrollReveal className="max-w-6xl mx-auto" delay={100}>
-          <div className="p-6 md:p-8 lg:p-10 rounded-2xl liquid-glass">
+          <SpotlightCard className="p-6 md:p-8 lg:p-10">
             {/* Header */}
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-8 gap-6">
               <div className="flex flex-col sm:flex-row sm:items-start gap-6 flex-1">
@@ -64,7 +53,7 @@ export const Education = () => {
                       href="https://www.nitk.ac.in/" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="self-start p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
+                      className="self-start p-2.5 rounded-md term-chip hover:border-violet-500/40 transition-all duration-300 hover:scale-110"
                     >
                       <ExternalLink className="w-5 h-5 text-gray-400" />
                     </a>
@@ -124,7 +113,7 @@ export const Education = () => {
                     "Research Project Contributor"
                   ].map((item, index) => (
                     <li key={index} className="flex items-start gap-3 group/item">
-                      <div className="w-1.5 h-1.5 bg-violet-500 rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform" />
+                      <div className="w-1.5 h-1.5 bg-violet-400 rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform" />
                       <span className="text-gray-400 leading-relaxed group-hover/item:text-gray-300 transition-colors">{item}</span>
                     </li>
                   ))}
@@ -134,7 +123,7 @@ export const Education = () => {
 
             {/* Achievements */}
             <ScrollReveal className="mt-10" delay={250}>
-              <div className="p-6 rounded-xl liquid-glass">
+              <div className="p-6 rounded-lg term-panel">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500">
                     <Award className="w-5 h-5 text-white" />
@@ -157,12 +146,10 @@ export const Education = () => {
                 </ul>
               </div>
             </ScrollReveal>
-          </div>
+          </SpotlightCard>
         </ScrollReveal>
       </div>
       
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
     </section>
   );
 };

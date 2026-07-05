@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ExternalLink, Github, Calendar, Server, ChevronUp, ChevronDown, Folder } from 'lucide-react';
 import { ScrollReveal } from './ui/ScrollReveal';
+import { SectionHeader } from './ui/SectionHeader';
+import { SpotlightCard } from './ui/SpotlightCard';
 
 export const Projects = () => {
   const [expandedProjects, setExpandedProjects] = useState<number[]>([]);
@@ -18,15 +20,16 @@ export const Projects = () => {
       title: "Self-Hosted Infrastructure Platform",
       organization: "Solo Project",
       period: "Ongoing",
-      description: "Multi-service self-hosted infrastructure on clustered Proxmox VE systems with Docker containers, segmented networking, reverse proxies, and centralized management.",
+      description: "Personal two-node Proxmox VE cluster hosting 30+ self-hosted services across LXC containers and VMs, with shared storage, segmented networking, and layered DNS.",
       color: "indigo",
       details: [
-        "Running multi-service self-hosted infrastructure on clustered Proxmox VE systems with a mix of linux containers and virtual machines, including segmented networking, reverse proxies, and centralized management workflows.",
-        "Hosting publicly accessible services such as Matrix Synapse, Mailcow, DoT/DoH, Vaultwarden, Immich, Jellyfin, Pi-hole, and Guacamole with automated TLS and domain-based routing through NGINX.",
-        "Managing infrastructure security and networking through OPNsense, WireGuard, VLAN isolation, firewall policies, DNS filtering, split public/private access paths, and isolated service networks for internet-facing applications.",
-        "Maintaining backup workflows, monitoring systems, health checks, DNS management, container orchestration, and observability pipelines across mixed Linux, Docker, and virtualized environments.",
+        "Two Proxmox VE nodes with ZFS storage and shared block storage over multipath iSCSI, supporting live migration of workloads between nodes.",
+        "OPNsense at the network edge for VLAN segmentation, firewall policies, WireGuard access, and separate public and private service paths.",
+        "A single containerized NGINX reverse proxy fronts 30+ services with automated Let's Encrypt TLS, per-service vhosts, and access logging, including Matrix Synapse, Mailcow, Immich, Vaultwarden, Guacamole, and this portfolio.",
+        "Layered DNS with local and public Pi-hole instances behind dnsdist, including DoT/DoH endpoints and split-horizon resolution.",
+        "Additional workloads include a Jellyfin-based media automation stack, Portainer, code-server, local LLM inference, game servers, and containers for auth, tunnels, and monitoring.",
       ],
-      technologies: ["Proxmox VE", "Docker", "NGINX", "OPNsense", "WireGuard", "VLAN", "Linux", "ZFS", "Monitoring"],
+      technologies: ["Proxmox VE", "ZFS", "iSCSI", "OPNsense", "NGINX", "WireGuard", "VLANs", "Pi-hole", "dnsdist", "Docker"],
       github: null,
       external: null
     },
@@ -37,11 +40,11 @@ export const Projects = () => {
       description: "APNIC-funded project for comprehensive IPv6 network implementation, including DHCPv6 snooping, firewalling, and dual-stack rollout.",
       color: "emerald",
       details: [
-        "Configured DHCPv6 snooping and IPv6 firewall rules to block unauthorized IPs and isolate internal networks.",
+        "Configured DHCPv6 snooping and IPv6 firewall rules to block unauthorized addresses and isolate internal networks.",
         "Deployed and tested VMs with bridged networking to validate IPv6 end-to-end via DHCPv6 and SLAAC.",
         "Led dual-stack IPv6 rollout (SLAAC + DHCPv6) on campus VLANs, starting with production use in a hostel.",
         "Diagnosed and mitigated rogue RA flooding from edge devices using port-based RA filtering and strict ACLs.",
-        "Resolved Android SLAAC and DNSv6 failures by reallocating from /56 to /64 and deploying RDNSS-only broadcasts with RADVD; verified IPv6-only reliability by disabling IPv4 on client devices."
+        "Resolved Android SLAAC and DNS failures by adjusting prefix allocation and RDNSS advertisements, and verified IPv6-only operation on client devices."
       ],
       technologies: ["IPv6", "DHCPv6", "SLAAC", "FreeBSD", "iptables", "Network Security"],
       github: null,
@@ -54,9 +57,9 @@ export const Projects = () => {
       description: "Django-based web interface to automate deployment of Dockerized applications in isolated staging environments.",
       color: "orange",
       details: [
-        "Developed a Django-based web interface to automate the deployment of Dockerized applications in isolated staging environments, allowing developers to launch test instances from Git URLs with no manual setup.",
-        "Implemented dynamic subdomain generation with automated NGINX configuration to expose each deployment at a unique, testable endpoint; added support for volume mounts, environment variables, and linking auxiliary services like Redis, Celery, and Daphne.",
-        "Built developer tooling including a real-time log viewer with search, a browser-based terminal using xterm.js, and asynchronous lifecycle controls with scripting hooks for fine-grained deployment management."
+        "Developed a Django-based web interface that deploys Dockerized applications into isolated staging environments directly from Git URLs, with no manual setup.",
+        "Implemented dynamic subdomains with automated NGINX configuration for each deployment, plus support for volumes, environment variables, and auxiliary services such as Redis and Celery.",
+        "Built developer tooling including a real-time log viewer, a browser-based terminal, and lifecycle controls with scripting hooks."
       ],
       technologies: ["Django", "Docker", "NGINX", "xterm.js", "CI/CD", "Redis", "Celery"],
       github: "https://github.com/IRIS-NITK/Staging-Server.git",
@@ -69,12 +72,12 @@ export const Projects = () => {
       description: "Full-stack, open-source portfolio and contact management platform built with React, TypeScript, Node.js, and Docker. Features modern UI, admin dashboard, Gmail integration, and advanced DevOps deployment.",
       color: "violet",
       details: [
-        "Designed and developed a modern, responsive portfolio using React (Vite, TypeScript, Tailwind CSS) for the frontend and Node.js (Express, TypeScript) for the backend.",
-        "Implemented a secure, Gmail-integrated contact form with server-side validation, anti-spam, and email delivery via both App Password and OAuth2.",
-        "Built an admin dashboard for managing all contact messages, viewing unified conversation threads, and replying directly from the web UI.",
-        "Integrated advanced authentication: NGINX-backed auth in production, admin login for dashboard, and flexible dev/prod modes.",
-        "Dockerized the entire stack for seamless local development and production deployment, with NGINX reverse proxy, static IPs, and SSL support.",
-        "Added health checks, logging, and robust security features (rate limiting, CORS, input validation, security headers, network isolation).",
+        "Designed and built a responsive portfolio with React, TypeScript, and Tailwind CSS on the frontend and a Node.js and Express backend.",
+        "Implemented a Gmail-integrated contact form with server-side validation, anti-spam measures, and OAuth2 email delivery.",
+        "Built an admin dashboard for managing messages, viewing conversation threads, and replying from the web UI.",
+        "Integrated NGINX-backed authentication in production with an admin login for the dashboard.",
+        "Dockerized the full stack for local development and production, behind an NGINX reverse proxy with SSL.",
+        "Added health checks, logging, rate limiting, CORS, input validation, and network isolation.",
       ],
       technologies: [
         "React", "Vite", "TypeScript", "Tailwind CSS", "Node.js", "Express", "Docker", "NGINX", "Gmail API", "OAuth2"
@@ -89,10 +92,10 @@ export const Projects = () => {
       description: "Centralized JWT authentication gateway for NGINX using Google OAuth 2.0 and ngx-http-auth-jwt-module to secure internal dashboards and self-hosted services.",
       color: "sky",
       details: [
-        "Built a centralized authentication gateway for NGINX using Google OAuth 2.0 and the ngx-http-auth-jwt-module to secure internal dashboards, applications, and self-hosted services with JWT-based authentication.",
-        "Supporting subset-based access control with configurable user groups, multiple JWT cookies, dynamic claim injection, and role-specific authentication workflows across shared infrastructure environments.",
-        "Handling secure login flows with signed JWT generation, return-URL preservation, redirect orchestration, session persistence, and hardened cookie policies across distributed subdomains and reverse proxies.",
-        "Running as a fully containerized Docker Compose deployment with environment-driven configuration, integrated rate limiting, and seamless integration into existing NGINX reverse proxy infrastructures.",
+        "Built a centralized authentication gateway for NGINX using Google OAuth 2.0 and JWT to secure internal dashboards and self-hosted services.",
+        "Supports group-based access control, multiple JWT cookies, dynamic claims, and role-specific authentication workflows.",
+        "Handles secure login flows with signed JWT generation, return-URL preservation, session persistence, and hardened cookie policies across subdomains.",
+        "Ships as a containerized Docker Compose deployment with environment-driven configuration and integrated rate limiting.",
       ],
       technologies: ["NGINX", "JWT", "Google OAuth", "Docker", "Node.js", "Docker Compose", "Security"],
       github: "https://github.com/w453y/ngx-http-auth-jwt-gateway",
@@ -105,10 +108,10 @@ export const Projects = () => {
       description: "Containerized Telegram media archiver using Telethon MTProto API for downloading and preserving media, captions, timestamps, and metadata from public and private chats.",
       color: "cyan",
       details: [
-        "Built a containerized Telegram media archiver using Telethon and the MTProto API to download and preserve media, captions, timestamps, and message metadata from public and private chats.",
-        "Supporting resumable archival workflows with persistent checkpointing, session reuse, metadata tracking, and automatic deduplication to continue interrupted downloads without redundant transfers.",
-        "Managing configurable parallel-download pipelines with environment-driven concurrency tuning, persistent storage management, and large-scale media synchronization under Telegram rate-limiting constraints.",
-        "Running as a reproducible Docker-based deployment with mounted persistent volumes for session handling, metadata databases, progress tracking, and long-term archival storage management.",
+        "Built a containerized Telegram media archiver using Telethon and the MTProto API, preserving media, captions, and message metadata.",
+        "Supports resumable archiving with persistent checkpointing, session reuse, and automatic deduplication.",
+        "Manages parallel downloads with configurable concurrency while respecting Telegram rate limits.",
+        "Runs as a reproducible Docker deployment with persistent volumes for sessions, metadata, and archived media.",
       ],
       technologies: ["Python", "Telethon", "Docker", "Telegram MTProto API", "Async Programming"],
       github: "https://github.com/w453y/tg-archiver",
@@ -132,34 +135,17 @@ export const Projects = () => {
   return (
     <section 
       id="projects" 
-      className="relative py-8 md:py-12 overflow-hidden bg-[#0a0a0a]"
+      className="relative py-8 md:py-12 overflow-hidden"
     >
       {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-48 w-96 h-96 bg-emerald-600/8 rounded-full blur-[150px] animate-pulse-glow" />
-        <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-violet-600/8 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-[200px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
-      </div>
       
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <ScrollReveal className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="text-white">Featured </span>
-            <span className="bg-gradient-to-r from-emerald-400 via-blue-400 to-violet-400 bg-clip-text text-transparent">Projects</span>
-          </h2>
-          <div className="flex items-center justify-center gap-2">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent to-emerald-500" />
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <div className="h-px w-24 bg-gradient-to-r from-emerald-500 via-blue-500 to-violet-500" />
-            <div className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <div className="h-px w-12 bg-gradient-to-l from-transparent to-violet-500" />
-          </div>
-          <p className="text-gray-400 mt-6 max-w-2xl mx-auto text-lg">
-            Innovative solutions spanning network engineering, DevOps, and research
-          </p>
-        </ScrollReveal>
+        <SectionHeader
+          title="Featured"
+          highlight="Projects"
+          subtitle="A selection of work across networking, infrastructure, and open source"
+        />
         
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8">
           {projects.map((project, index) => {
@@ -170,19 +156,19 @@ export const Projects = () => {
               <ScrollReveal
                 key={index}
                 delay={index * 100}
-                className={projects.length % 2 === 1 && index === projects.length - 1 ? 'lg:col-start-1 lg:col-end-3 lg:mx-auto lg:w-1/2' : ''}
+                className={index === 0 ? 'lg:col-span-2' : ((projects.length - 1) % 2 === 1 && index === projects.length - 1 ? 'lg:col-start-1 lg:col-end-3 lg:mx-auto lg:w-1/2' : '')}
               >
-                <div className={`group h-full p-6 md:p-8 rounded-2xl liquid-glass hover:-translate-y-2 hover:shadow-2xl ${colors.glow} flex flex-col min-h-[420px] transition-transform duration-300`}>
+                <SpotlightCard className={`group h-full p-6 md:p-8 hover:-translate-y-2 hover:shadow-2xl ${colors.glow} flex flex-col min-h-[420px] transition-transform duration-300`}>
                   {/* Project header */}
                   <div className="flex items-start justify-between mb-6">
-                    <div className={`p-3 rounded-xl bg-gradient-to-br ${colors.gradient} shadow-lg`}>
+                    <div className={`p-3 rounded-xl bg-gradient-to-br ${colors.gradient} shadow-lg group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300`}>
                       <Folder className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex gap-2">
                       {project.github && (
                         <a 
                           href={project.github} 
-                          className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110 group/link" 
+                          className="p-2.5 rounded-md term-chip hover:border-violet-500/40 transition-all duration-300 hover:scale-110 group/link" 
                           target="_blank" 
                           rel="noopener noreferrer"
                         >
@@ -192,7 +178,7 @@ export const Projects = () => {
                       {project.external && (
                         <a 
                           href={project.external} 
-                          className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110 group/link" 
+                          className="p-2.5 rounded-md term-chip hover:border-violet-500/40 transition-all duration-300 hover:scale-110 group/link" 
                           target="_blank" 
                           rel="noopener noreferrer"
                         >
@@ -202,7 +188,7 @@ export const Projects = () => {
                     </div>
                   </div>
                   
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-white transition-colors">{project.title}</h3>
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2 font-display">{project.title}</h3>
                   
                   {project.organization && (
                     <p className={`text-lg font-semibold ${colors.text} mb-2`}>
@@ -218,6 +204,18 @@ export const Projects = () => {
                   </div>
                   
                   <p className="text-gray-400 mb-6 leading-relaxed">{project.description}</p>
+
+                  {index === 0 && (
+                    <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-2 mb-6 font-mono text-xs">
+                      {['opnsense', 'nginx', 'mailcow', 'matrix-synapse', 'immich', 'vaultwarden', 'jellyfin', 'pi-hole', 'dnsdist', 'guacamole', 'portainer', 'portfolio'].map(svc => (
+                        <div key={svc} className="flex items-center gap-2 px-3 py-2 rounded-md term-chip">
+                          <span className="led flex-shrink-0" style={{ width: 6, height: 6 }} />
+                          <span className="text-gray-400 truncate">{svc}</span>
+                          <span className="ml-auto text-emerald-500/70">up</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   
                   <ul className="space-y-3 mb-6 flex-1">
                     {(isExpanded ? project.details : project.details.slice(0, 2)).map((detail, i) => (
@@ -246,21 +244,19 @@ export const Projects = () => {
                     {project.technologies.map((tech, i) => (
                       <span 
                         key={i} 
-                        className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                        className="px-3 py-1 term-chip rounded-full text-xs font-mono text-gray-400 hover:text-white transition-all duration-300"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
-                </div>
+                </SpotlightCard>
               </ScrollReveal>
             );
           })}
         </div>
       </div>
       
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
     </section>
   );
 };

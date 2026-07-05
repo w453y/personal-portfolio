@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Users, Presentation, ExternalLink, Sparkles, Github } from 'lucide-react';
+import { Award, Presentation, ExternalLink, Github } from 'lucide-react';
 import { FaNetworkWired, FaCloud, FaDocker, FaLinux, FaGitAlt, FaServer, FaShieldAlt, 
          FaPython, FaJs, FaReact, FaDatabase, FaAws, FaGoogle, FaMicrosoft, 
          FaCertificate, FaUserGraduate, FaHandshake } from 'react-icons/fa';
@@ -13,6 +13,8 @@ import { SiKubernetes, SiTerraform, SiAnsible, SiPrometheus, SiGrafana, SiJenkin
          SiShell} from 'react-icons/si';
 import { TbPresentation } from 'react-icons/tb';
 import { ScrollReveal } from './ui/ScrollReveal';
+import { SectionHeader } from './ui/SectionHeader';
+import { SpotlightCard } from './ui/SpotlightCard';
 
 export const Skills = () => {
   const CustomIcon = ({ src, alt, fallback, className = "w-5 h-5", iconSize = "w-5 h-5" }: { 
@@ -120,9 +122,9 @@ export const Skills = () => {
       description: "Enterprise-grade virtualization platform",
       color: "orange",
       details: [
-        "Investigated and reproduced a Proxmox VE backend issue causing the GUI 'Disks' page to hang indefinitely when querying SMART data from USB-attached SSDs through smartctl.",
-        "Traced the issue through internal Perl-based PVE API disk-management workflows, identified blocking SMART queries without timeout handling, and validated the root cause through targeted debugging and controlled testing.",
-        "Collaborated with upstream Proxmox developers by providing diagnostic data, timing analysis, reproduction steps, and framework-level observations that contributed to an official timeout-handling patch review.",
+        "Investigated and reproduced a backend issue that caused the GUI Disks page to hang when querying SMART data from USB-attached SSDs.",
+        "Traced the issue through the Perl-based disk-management API and identified blocking SMART queries without timeout handling as the root cause.",
+        "Worked with upstream developers by providing diagnostics and reproduction steps that fed into an official timeout-handling patch review.",
       ],
       technologies: ["Proxmox VE", "Perl", "Storage", "Debugging", "SMART"],
       github: "https://bugzilla.proxmox.com/show_bug.cgi?id=6224",
@@ -137,9 +139,9 @@ export const Skills = () => {
       description: "NGINX JWT authentication module",
       color: "violet",
       details: [
-        "Added runtime-variable support for the auth_jwt_enabled directive in the upstream JWT authentication module, enabling conditional JWT enforcement based on request context, IP ranges, and dynamically evaluated nginx variables.",
-        "Implemented support for integrations with nginx geo and map modules to allow scenarios such as VPN subnet whitelisting, selective authentication bypass, and runtime-controlled access policies for protected services.",
-        "Collaborated with upstream maintainers on testing, code cleanup, and integration workflows; contribution was merged into the official project.",
+        "Added runtime-variable support for the auth_jwt_enabled directive, enabling conditional JWT enforcement based on request context and nginx variables.",
+        "Enabled integration with the nginx geo and map modules for cases such as VPN subnet allowlisting and selective authentication bypass.",
+        "Worked with upstream maintainers on testing and cleanup; the contribution was merged into the official project.",
       ],
       technologies: ["NGINX", "C", "Authentication", "JWT", "Open Source"],
       github: "https://github.com/TeslaGov/ngx-http-auth-jwt-module/pull/152",
@@ -152,7 +154,7 @@ export const Skills = () => {
       title: "Securing IPv6 Networks with Firewalls",
       event: "Workshop Session",
       organizer: "IIESOC, Dept. of CSE and COSH-NITK Surathkal",
-      description: "Delivered a technical session on IPv6 network security, detailing core firewall architecture, nuances of stateful filtering, key differences from IPv4, rule translation strategies, address scope handling, and deployment best practices for real-world dual-stack environments.",
+      description: "A technical session on IPv6 firewalling, covering stateful filtering, differences from IPv4, rule translation, and deployment practices for dual-stack networks.",
       color: "blue",
       icon: "/uploads/nitk.svg",
       fallback: <Presentation className="w-6 h-6 text-blue-400" />,
@@ -162,30 +164,30 @@ export const Skills = () => {
       title: "WAN Aggregation using OpenMPTCProuter (OMR)",
       event: "FOSS Meetup 2024",
       organizer: "FOSS United",
-      description: "Introduced Multipath TCP (MPTCP) and its role in multi-homed network scenarios for bandwidth aggregation and automatic failover. Demonstrated hands-on setup of OMR on Raspberry Pi with real-world use cases.",
+      description: "An introduction to Multipath TCP for bandwidth aggregation and failover, with a hands-on OpenMPTCProuter setup on a Raspberry Pi.",
       color: "violet",
       icon: "/uploads/foss.svg",
-      fallback: <Presentation className="w-6 h-6 text-purple-400" />,
+      fallback: <Presentation className="w-6 h-6 text-violet-300" />,
       externalLink: "https://fossunited.org/c/mangalore/mangalore-october-2024/cfp/b4crbbvath"
     },
     {
       title: "Introduction to Self-Hosting with Free and Open Source Tools",
       event: "FOSS Meetup 2025",
       organizer: "FOSS United",
-      description: "Presented self-hosting as a privacy-respecting, cloud-independent approach, showcasing alternatives like Nextcloud, Jellyfin, and Vikunja. Delivered deep dive into Proxmox VE, Docker, reverse proxies, and backup best practices.",
+      description: "A session on self-hosting as a privacy-friendly alternative to cloud services, covering virtualization, containers, reverse proxies, and backups.",
       color: "emerald",
       icon: "/uploads/foss.svg",
-      fallback: <Presentation className="w-6 h-6 text-emerald-400" />,
+      fallback: <Presentation className="w-6 h-6 text-violet-300" />,
       externalLink: "https://fossunited.org/c/mangalore/mangalore-august-2025/cfp/8dk9fae74j"
     },
     {
       title: "Open Source Monitoring in Action",
       event: "FOSS Meetup 2025",
       organizer: "FOSS United",
-      description: "Delivered comprehensive session on designing scalable, vendor-neutral monitoring architectures using Zabbix, LibreNMS, and ClickHouse. Demonstrated hybrid monitoring pipelines and cost reduction strategies.",
+      description: "A session on vendor-neutral monitoring architectures using Zabbix, LibreNMS, and ClickHouse, including hybrid pipelines and cost considerations.",
       color: "pink",
       icon: "/uploads/foss.svg",
-      fallback: <Presentation className="w-6 h-6 text-pink-400" />,
+      fallback: <Presentation className="w-6 h-6 text-violet-300" />,
       externalLink: "https://fossunited.org/c/mangalore/mangalore-october/cfp/cqf9edi8jv"
     }
   ];
@@ -205,60 +207,45 @@ export const Skills = () => {
   return (
     <section 
       id="skills" 
-      className="relative py-8 md:py-12 overflow-hidden bg-[#0a0a0a]"
+      className="relative py-8 md:py-12 overflow-hidden"
     >
       {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -right-48 w-96 h-96 bg-pink-600/8 rounded-full blur-[150px] animate-pulse-glow" />
-        <div className="absolute bottom-1/3 -left-48 w-96 h-96 bg-blue-600/8 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
-      </div>
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <ScrollReveal className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="text-white">Skills & </span>
-            <span className="bg-gradient-to-r from-pink-400 via-violet-400 to-blue-400 bg-clip-text text-transparent">Expertise</span>
-          </h2>
-          <div className="flex items-center justify-center gap-2">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent to-pink-500" />
-            <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse" />
-            <div className="h-px w-24 bg-gradient-to-r from-pink-500 via-violet-500 to-blue-500" />
-            <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <div className="h-px w-12 bg-gradient-to-l from-transparent to-blue-500" />
-          </div>
-        </ScrollReveal>
+        <SectionHeader
+          title="Skills &"
+          highlight="Expertise"
+          accent="amber"
+        />
 
-        {/* Technical Skills */}
+        {/* Technical Skills — infinite marquee rows, pause on hover */}
         <ScrollReveal className="max-w-7xl mx-auto mb-16" delay={100}>
-          <div className="p-6 md:p-8 rounded-2xl liquid-glass">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-pink-500 to-violet-500">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold text-white">Technical Skills</h3>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {technicalSkills.map((skill, index) => (
-                <div 
-                  key={index} 
-                  className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/15 hover:bg-white/5 transition-all duration-300 group cursor-default"
-                >
-                  <div className="flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                    {skill.icon}
-                  </div>
-                  <span className="text-gray-400 text-sm group-hover:text-white transition-colors">{skill.name}</span>
+          <div className="py-8 space-y-4">
+            {[technicalSkills.slice(0, Math.ceil(technicalSkills.length / 2)), technicalSkills.slice(Math.ceil(technicalSkills.length / 2))].map((row, rowIndex) => (
+              <div key={rowIndex} className="marquee-mask overflow-hidden">
+                <div className={`marquee-track ${rowIndex === 1 ? 'reverse' : ''} gap-3 pr-3`}>
+                  {[...row, ...row].map((skill, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-3 px-5 py-3 rounded-full term-chip transition-all duration-300 group cursor-default whitespace-nowrap"
+                    >
+                      <div className="flex-shrink-0 group-hover:scale-125 transition-transform duration-300">
+                        {skill.icon}
+                      </div>
+                      <span className="text-gray-400 text-sm group-hover:text-white transition-colors">{skill.name}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </ScrollReveal>
 
         {/* Open Source Contributions */}
         <ScrollReveal className="max-w-7xl mx-auto mb-16" delay={125}>
           <div className="text-center mb-12">
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Open Source Contributions</h3>
+            <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-4">Open Source Contributions</h3>
             <div className="h-px w-24 bg-gradient-to-r from-transparent via-emerald-500 to-transparent mx-auto" />
           </div>
           <div className="grid md:grid-cols-2 gap-8">
@@ -266,7 +253,7 @@ export const Skills = () => {
               const colors = getColorClasses(contribution.color);
               return (
                 <ScrollReveal key={index} delay={index * 100}>
-                  <div className={`group h-full p-6 md:p-8 rounded-2xl liquid-glass hover:-translate-y-2 hover:shadow-2xl ${colors.glow} flex flex-col min-h-[420px] transition-transform duration-300`}>
+                  <SpotlightCard className="group h-full p-6 md:p-8 hover:-translate-y-2 hover:shadow-2xl flex flex-col min-h-[420px] transition-transform duration-300">
                     {/* Header with icon */}
                     <div className="flex items-start justify-between mb-6">
                       <div className={`p-3 rounded-xl bg-gradient-to-br ${colors.gradient} shadow-lg`}>
@@ -276,7 +263,7 @@ export const Skills = () => {
                         href={contribution.external}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 hover:scale-110"
+                        className="p-2 rounded-md term-chip hover:border-violet-500/40 transition-all duration-300 hover:scale-110"
                       >
                         <ExternalLink className="w-5 h-5 text-gray-400 hover:text-white" />
                       </a>
@@ -330,12 +317,12 @@ export const Skills = () => {
                     {/* Technologies */}
                     <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-white/5">
                       {contribution.technologies.slice(0, 4).map((tech, i) => (
-                        <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                        <span key={i} className="px-3 py-1 term-chip rounded-full text-xs font-mono text-gray-400 hover:text-white transition-all duration-300">
                           {tech}
                         </span>
                       ))}
                     </div>
-                  </div>
+                  </SpotlightCard>
                 </ScrollReveal>
               );
             })}
@@ -345,15 +332,15 @@ export const Skills = () => {
         {/* Talks & Presentations */}
         <ScrollReveal className="max-w-7xl mx-auto mb-16" delay={200}>
           <div className="text-center mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Talks & Presentations</h3>
-            <div className="h-px w-20 bg-gradient-to-r from-transparent via-violet-500 to-transparent mx-auto" />
+            <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-4">Talks & Presentations</h3>
+            <div className="h-px w-20 bg-gradient-to-r from-transparent via-violet-500/60 to-transparent mx-auto" />
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {talks.map((talk, index) => {
               const colors = getColorClasses(talk.color);
               return (
                 <ScrollReveal key={index} delay={index * 100}>
-                  <div className="group p-6 rounded-2xl liquid-glass hover:-translate-y-1 transition-transform duration-300 h-full">
+                  <SpotlightCard className="group p-6 hover:-translate-y-1 transition-transform duration-300 h-full">
                     <div className="flex items-start justify-between mb-4">
                       <div>
                         <img 
@@ -371,7 +358,7 @@ export const Skills = () => {
                           href={talk.externalLink} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
+                          className="p-2 rounded-md term-chip hover:border-violet-500/40 transition-all duration-300 hover:scale-110"
                         >
                           <ExternalLink className="w-4 h-4 text-gray-400" />
                         </a>
@@ -385,7 +372,7 @@ export const Skills = () => {
                       <p className="text-gray-500 text-sm mb-3">{talk.organizer}</p>
                     )}
                     <p className="text-gray-400 text-sm leading-relaxed">{talk.description}</p>
-                  </div>
+                  </SpotlightCard>
                 </ScrollReveal>
               );
             })}
@@ -395,10 +382,10 @@ export const Skills = () => {
         {/* Certifications */}
         <ScrollReveal className="max-w-4xl mx-auto mb-16" delay={150}>
           <div className="text-center mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Certifications</h3>
-            <div className="h-px w-16 bg-gradient-to-r from-transparent via-violet-500 to-transparent mx-auto" />
+            <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-4">Certifications</h3>
+            <div className="h-px w-16 bg-gradient-to-r from-transparent via-violet-500/60 to-transparent mx-auto" />
           </div>
-          <div className="p-6 md:p-8 rounded-2xl liquid-glass space-y-4">
+          <SpotlightCard className="p-6 md:p-8 space-y-4">
             {certifications.map((cert, index) => {
               const colors = getColorClasses(cert.color);
               return (
@@ -422,7 +409,7 @@ export const Skills = () => {
                       href={cert.externalLink} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110"
+                      className="p-2.5 rounded-md term-chip hover:border-violet-500/40 transition-all duration-300 hover:scale-110"
                     >
                       <ExternalLink className="w-5 h-5 text-gray-400" />
                     </a>
@@ -430,17 +417,17 @@ export const Skills = () => {
                 </div>
               );
             })}
-          </div>
+          </SpotlightCard>
         </ScrollReveal>
 
         {/* Leadership & Community */}
         {/* DISABLED - TEMPORARY HIDE
         <ScrollReveal className="max-w-5xl mx-auto" delay={250}>
           <div className="text-center mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Leadership & Community</h3>
-            <div className="h-px w-24 bg-gradient-to-r from-transparent via-violet-500 to-transparent mx-auto" />
+            <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-4">Leadership & Community</h3>
+            <div className="h-px w-24 bg-gradient-to-r from-transparent via-violet-500/60 to-transparent mx-auto" />
           </div>
-          <div className="p-6 md:p-8 rounded-2xl liquid-glass">
+          <div className="p-6 md:p-8 rounded-lg term-card">
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
               <div className="flex items-start gap-4">
                 <img 
@@ -481,8 +468,6 @@ export const Skills = () => {
         */}
       </div>
       
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
     </section>
   );
 };

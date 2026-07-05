@@ -1,0 +1,85 @@
+# Abdul Wasey (w453y)
+
+> Network and firmware engineer from NITK Surathkal, India. Works on
+> secure-boot firmware for Qualcomm and OpenWrt platforms, IPv6 deployment,
+> high-availability virtualization, and open-source tooling.
+> Site: https://w453y.me · Email: awasey8905@gmail.com
+
+## Identity
+
+- Name: Abdul Wasey
+- Handle: w453y (consistent across GitHub, LinkedIn, Twitter/X, Instagram, Reddit, Telegram)
+- Location: Mangalore, Karnataka, India (IST, UTC+5:30)
+- Education: B.Tech, National Institute of Technology Karnataka (NITK), Surathkal, Nov 2022 to May 2026, Metallurgical and Materials Engineering
+- Current role: Firmware Engineer at Quantum Networks (https://www.qntmnet.com), Dec 2025 to present, remote
+
+## Experience
+
+### Firmware Engineer, Quantum Networks (Dec 2025 to present)
+- FIT image verification and verified boot in U-Boot for OpenWrt-based AP platforms; authenticated kernel/rootfs validation across dual-image NOR+NAND layouts.
+- Complete Qualcomm IPQ60xx secure-boot workflow: OEM key provisioning, signed-image generation, QFPROM fuse payloads, boot-chain verification from PBL to Linux.
+- Debugged Qualcomm Sectools, MBN v6 metadata, soc_vers handling; fixed secure-boot failures on IPQ6010/IPQ6018.
+- Hardened OpenWrt/QSDK firmware-signing pipeline: RSA-PSS signing, SHA-384 fuse hashing, automated sec.dat generation, signed recovery images.
+- Low-level recovery: U-Boot, EDL/Sahara, Firehose, serial-console tracing, SPI-NOR analysis, staged flashing.
+
+### Intern, Tata Communications, Pune (May to Jul 2025)
+- Multi-link WAN switching and aggregation engine with seamless failover across uplinks.
+- Clustered virtualization environment on enterprise rack servers with redundant SAN storage and multipath I/O.
+- Performance-isolated networking with dedicated interfaces and VLANs; validated with structured failover testing.
+
+### Systems Engineer and Lead, IRIS NITK (May 2023 to May 2026)
+- JWT auth via custom-compiled NGINX module integrated with Rails.
+- Zabbix + Grafana monitoring with Discord alerting (SSL expiry, outages, anomalies).
+- Dockerized GitLab Enterprise migration with automated NAS backups.
+- Zero-downtime migration of 40+ containers and 15+ VMs from legacy Proxmox/Nutanix to a high-availability Proxmox cluster.
+
+### Research Intern, NITK Surathkal (Apr to Jul 2024, supervisor: Prof. Mohit P. Tahiliani)
+- Full NAC testbed: PacketFence, OPNsense, 802.1X, VLAN segmentation, dynamic device onboarding.
+
+## Projects
+
+- Self-Hosted Infrastructure Platform: personal two-node Proxmox VE cluster with ZFS and shared block storage over multipath iSCSI, hosting 30+ services. OPNsense at the edge (VLANs, firewall, WireGuard), a single containerized NGINX reverse proxy with automated Let's Encrypt TLS fronting all services (Matrix Synapse, Mailcow, Immich, Vaultwarden, Guacamole, Stirling-PDF, this portfolio), layered DNS with local and public Pi-hole instances behind dnsdist (DoT/DoH, split-horizon), a Jellyfin-based media automation stack, Portainer, code-server, local LLM inference, and game servers.
+- IPv6 Deployment at NITK (APNIC-funded): dual-stack SLAAC + DHCPv6 rollout on campus VLANs; DHCPv6 snooping, rogue-RA mitigation, RDNSS fixes for Android clients. https://apnic.foundation/projects/migrating-nitk-surathkal-campus-network-to-ipv6/
+- Staging-Server (IRIS NITK): Django app deploying Dockerized apps to isolated staging environments with dynamic subdomains, live log viewer, browser terminal (xterm.js). https://github.com/IRIS-NITK/Staging-Server
+- ngx-http-auth-jwt-gateway: centralized JWT auth gateway for NGINX with Google OAuth 2.0. https://github.com/w453y/ngx-http-auth-jwt-gateway
+- tg-archiver: containerized Telegram media archiver (Telethon/MTProto) with resumable, deduplicated parallel downloads. https://github.com/w453y/tg-archiver
+- personal-portfolio: this website, built with React, TypeScript, Vite, Tailwind, Node.js/Express backend, Docker + NGINX. https://github.com/w453y/personal-portfolio
+
+## Open-source contributions
+
+- TeslaGov/ngx-http-auth-jwt-module: PR #152 merged in v2.4.0: runtime-variable support for auth_jwt_enabled (conditional JWT enforcement, geo/map module integration).
+- Proxmox VE, Bugzilla #6224: root-caused GUI "Disks" hang from blocking SMART queries on USB SSDs; contributed diagnostics to upstream timeout patch review.
+
+## Talks
+
+- "Securing IPv6 Networks with Firewalls" (IIESOC / CSE / COSH-NITK workshop, 2024)
+- "WAN Aggregation using OpenMPTCProuter (OMR)" (FOSS United Mangalore, Oct 2024)
+- "Introduction to Self-Hosting with Free and Open Source Tools" (FOSS United Mangalore, Aug 2025)
+- "Open Source Monitoring in Action" (FOSS United Mangalore, Oct 2025)
+
+## Community
+
+- Founder and moderator of r/dockerCE, a community-run Docker subreddit.
+- Writes technical guides on Reddit as u/w453y, including converting a clustered Proxmox node to standalone without reinstalling and setting up DNS over TLS for Pi-hole with stunnel. Active in r/Proxmox, r/selfhosted, r/homelab, and r/pihole.
+- Keybase-verified identity linking GitHub, Reddit, Twitter, and Hacker News accounts: https://keybase.io/w453y
+
+## Certifications
+
+- Google Cybersecurity Professional Certificate (2023)
+- Oracle OCI Certified Architect Associate (2026)
+- Oracle OCI Certified DevOps Professional (2026)
+
+## Skills
+
+Networking (IPv4/IPv6, routing, VLANs, NAC, 802.1X, MPTCP), firmware (OpenWrt, U-Boot, Qualcomm IPQ60xx, secure boot), virtualization (Proxmox VE, VMware, Nutanix), containers (Docker, Kubernetes), cloud (AWS, GCP, Azure, OCI), IaC & automation (Terraform, Ansible, CI/CD, GitHub Actions), monitoring (Zabbix, Grafana, Prometheus, LibreNMS), web infra (NGINX, Apache), languages (Python, JavaScript/TypeScript, Lua, Shell), databases (PostgreSQL, MySQL, MongoDB, Redis).
+
+## Links
+
+- Website: https://w453y.me
+- GitHub: https://github.com/w453y
+- LinkedIn: https://linkedin.com/in/w453y
+- Twitter/X: https://twitter.com/w453y
+- Telegram: https://t.me/w453y
+- Reddit: https://www.reddit.com/user/w453y
+- Keybase: https://keybase.io/w453y
+- Email: awasey8905@gmail.com

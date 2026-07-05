@@ -9,12 +9,19 @@ interface ScrollRevealProps {
   once?: boolean; // if true, only animate once (don't hide when scrolling out)
 }
 
+/**
+ * Reveal-on-scroll. The observed outer wrapper never moves; the transform
+ * is applied to an inner element. This prevents the hide animation from
+ * shifting the observed bounds and re-triggering the observer (which
+ * causes visible flicker at the viewport edge). The stagger delay applies
+ * only when showing, so hiding is always immediate and smooth.
+ */
 export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   children,
   className = '',
   delay = 0,
   direction = 'up',
-  duration = 500,
+  duration = 600,
   once = false,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,8 +42,8 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
         }
       },
       {
-        threshold: 0.1, // Trigger when 10% of element is visible
-        rootMargin: '0px 0px -50px 0px', // Trigger slightly before element is fully in view
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px',
       }
     );
 
@@ -47,7 +54,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
 
   const getTransform = () => {
     if (isVisible) return 'translate(0, 0)';
-    
+
     switch (direction) {
       case 'up':
         return 'translateY(30px)';
@@ -63,18 +70,20 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
     }
   };
 
+  const activeDelay = isVisible ? delay : 0;
+
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: getTransform(),
-        transition: `opacity ${duration}ms ease-out ${delay}ms, transform ${duration}ms ease-out ${delay}ms`,
-        willChange: 'opacity, transform',
-      }}
-    >
-      {children}
+    <div ref={ref} className={className}>
+      <div
+        style={{
+          height: '100%',
+          opacity: isVisible ? 1 : 0,
+          transform: getTransform(),
+          transition: `opacity ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${activeDelay}ms, transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${activeDelay}ms`,
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 };

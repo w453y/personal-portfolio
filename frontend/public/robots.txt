@@ -1,20 +1,48 @@
+# w453y.me — everyone is welcome, including AI crawlers.
+# Machine-readable profile: https://w453y.me/llms.txt
+
 User-agent: *
 Allow: /
-
-# Allow indexing of main portfolio content
-Allow: /$
-Allow: /about
-Allow: /experience
-Allow: /projects
-Allow: /skills
-Allow: /education
-Allow: /contact
-
-# Block admin and authentication pages
 Disallow: /login
 Disallow: /mailbox
 Disallow: /auth/
 Disallow: /api/
 
-# Sitemap location
+# --- AI / LLM crawlers (explicitly allowed) ---
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
 Sitemap: https://w453y.me/sitemap.xml
